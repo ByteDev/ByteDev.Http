@@ -30,3 +30,10 @@ The repo can be cloned from git bash:
 
 ## Usage
 
+```csharp
+HttpStatusCode statusCode = HttpStatusCode.CreateFromCode(404);
+
+Console.WriteLine(statusCode.Code);
+Console.WriteLine(statusCode.Name);
+Console.WriteLine(statusCode.Category);
+```
