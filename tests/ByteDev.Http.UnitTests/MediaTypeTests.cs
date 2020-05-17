@@ -25,7 +25,6 @@ namespace ByteDev.Http.UnitTests
         }
 
         [TestCase("application")]
-        [TestCase("application/vnd.ms.ms-excel")]
         [TestCase("application/vnd.api+json+xml")]
         [TestCase("text/html; charset=UTF-8; charset=UTF-16")]
         public void WhenIsMalformed_ThenThrowException(string mediaType)
@@ -54,6 +53,18 @@ namespace ByteDev.Http.UnitTests
             Assert.That(sut.Type, Is.EqualTo("application"));
             Assert.That(sut.Tree, Is.EqualTo("vnd"));
             Assert.That(sut.SubType, Is.EqualTo("ms-excel"));
+            Assert.That(sut.Suffix, Is.Null);
+            Assert.That(sut.Parameter, Is.Null);
+        }
+
+        [Test]
+        public void WhenContainsMultipleTrees_ThenSetsProperties()
+        {
+            var sut = new MediaType("application/vnd.oasis.opendocument.text");
+
+            Assert.That(sut.Type, Is.EqualTo("application"));
+            Assert.That(sut.Tree, Is.EqualTo("vnd.oasis.opendocument"));
+            Assert.That(sut.SubType, Is.EqualTo("text"));
             Assert.That(sut.Suffix, Is.Null);
             Assert.That(sut.Parameter, Is.Null);
         }

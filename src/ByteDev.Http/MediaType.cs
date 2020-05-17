@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace ByteDev.Http
 {
@@ -93,13 +92,22 @@ namespace ByteDev.Http
         {
             var parts = right.Split('.');
 
-            if (parts.Length == 1)
-                return null;
+            if (parts.Length >= 2)
+            {
+                var tree = string.Empty;
 
-            if (parts.Length == 2)
-                return parts[0];
+                for (var i = 0; i < parts.Length - 1; i++)
+                {
+                    if (tree != string.Empty)
+                        tree += ".";
 
-            throw new ArgumentException(MalformedMessage);
+                    tree += parts[i];
+                }
+
+                return tree;
+            }
+
+            return null;
         }
 
         private static string GetParameter(string right)
