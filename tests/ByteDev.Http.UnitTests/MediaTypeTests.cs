@@ -21,7 +21,8 @@ namespace ByteDev.Http.UnitTests
         [Test]
         public void WhenTypeNotRegistered_ThenThrowException()
         {
-            Assert.Throws<ArgumentException>(() => _ = new MediaType("myapplication/json"));
+            var ex = Assert.Throws<ArgumentException>(() => _ = new MediaType("myapplication/json"));
+            Assert.That(ex.Message, Is.EqualTo("Media type does not have a registered type."));
         }
 
         [TestCase("application")]

@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace ByteDev.Http
 {
+    /// <summary>
+    /// Represents an internet media type. Also known as a Multipurpose Internet
+    /// Mail Extensions or MIME type. As defined in RFC 6838.
+    /// </summary>
+    /// <remarks>
+    /// See: https://tools.ietf.org/html/rfc6838
+    /// </remarks>
     public class MediaType
     {
         private const string MalformedMessage = "Media type was malformed.";
@@ -21,6 +28,9 @@ namespace ByteDev.Http
             "video"
         };
 
+        /// <summary>
+        /// Type. Such as application, image, text etc.
+        /// </summary>
         public string Type { get; }
 
         public string Tree { get; }
@@ -83,7 +93,7 @@ namespace ByteDev.Http
                 throw new ArgumentException(MalformedMessage);
 
             if (!RegisteredTypes.Contains(parts[0]))
-                throw new ArgumentException("Media type does not have a valid type.");
+                throw new ArgumentException("Media type does not have a registered type.");
 
             return parts[0];
         }
@@ -109,6 +119,8 @@ namespace ByteDev.Http
 
             return null;
         }
+
+        // TODO: change so can handle multiple parameters
 
         private static string GetParameter(string right)
         {
