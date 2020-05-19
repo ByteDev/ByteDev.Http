@@ -108,7 +108,7 @@ namespace ByteDev.Http.UnitTests
             [TestCase("text/html; charset=UTF-8; charset=UTF-16")]
             public void WhenContainsTwoParameters_ThenSetProperties(string mediaType)
             {
-                var sut = new MediaType("text/html; charset=UTF-8; charset=UTF-16");
+                var sut = new MediaType(mediaType);
 
                 Assert.That(sut.Type, Is.EqualTo("text"));
                 Assert.That(sut.Tree, Is.Null);
