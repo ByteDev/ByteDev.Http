@@ -26,12 +26,18 @@ namespace ByteDev.Http.UnitTests
         }
 
         [TestCase("application")]
-        [TestCase("application/vnd.api+json+xml")]
-        [TestCase("text/html; charset=UTF-8; charset=UTF-16")]
-        public void WhenIsMalformed_ThenThrowException(string mediaType)
+        [TestCase("application/json/xml")]
+        public void WhenIsMalformedWithDoesNotHaveSingleForwardSlash_ThenThrowException(string mediaType)
         {
             var ex = Assert.Throws<ArgumentException>(() => _ = new MediaType(mediaType));
-            Assert.That(ex.Message, Is.EqualTo("Media type was malformed."));
+            Assert.That(ex.Message, Is.EqualTo("Media type was malformed. Must have exactly one forward slash."));
+        }
+
+        [Test]
+        public void WhenIsMalformedWithMultiplePlusChar_ThenThrowException()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => _ = new MediaType("application/vnd.api+json+xml"));
+            Assert.That(ex.Message, Is.EqualTo("Media type was malformed. Must not have more than one plus character."));
         }
 
         [Test]
@@ -92,6 +98,18 @@ namespace ByteDev.Http.UnitTests
             Assert.That(sut.SubType, Is.EqualTo("html"));
             Assert.That(sut.Suffix, Is.Null);
             Assert.That(sut.Parameter, Is.EqualTo("charset=UTF-8"));
+        }
+
+        [Test]
+        public void WhenContainsTwoParameters_ThenSetProperties()
+        {
+            var sut = new MediaType("text/html; charset=UTF-8; charset=UTF-16");
+
+            Assert.That(sut.Type, Is.EqualTo("text"));
+            Assert.That(sut.Tree, Is.Null);
+            Assert.That(sut.SubType, Is.EqualTo("html"));
+            Assert.That(sut.Suffix, Is.Null);
+            Assert.That(sut.Parameter, Is.EqualTo("charset=UTF-8; charset=UTF-16"));
         }
 
         [Test]

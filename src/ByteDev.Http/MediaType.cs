@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ByteDev.Http
 {
@@ -12,9 +14,7 @@ namespace ByteDev.Http
     /// </remarks>
     public class MediaType
     {
-        private const string MalformedMessage = "Media type was malformed.";
-
-        private static readonly HashSet<string> RegisteredTypes = new HashSet<string>
+        public static readonly HashSet<string> RegisteredTypes = new HashSet<string>
         {
             "application",
             "audio",
@@ -52,87 +52,63 @@ namespace ByteDev.Http
             if (string.IsNullOrEmpty(mediaType))
                 throw new ArgumentException("Media type was null or empty.", nameof(mediaType));
 
-            var parts = mediaType.Split('/');
+            if (mediaType.CountOccurrences('/') != 1)
+                throw new ArgumentException("Media type was malformed. Must have exactly one forward slash.");
 
-            Type = GetType(parts);
+            if (mediaType.CountOccurrences('+') > 1)
+                throw new ArgumentException("Media type was malformed. Must not have more than one plus character.");
 
-            var right = parts[1];
-
-            Tree = GetTree(right);
-            Parameter = GetParameter(right);
-
-            var treeLen = Tree.SafeLength() == 0 ? 0 : Tree.SafeLength() + 1;
-            var paramLen = Parameter.SafeLength() == 0 ? 0 : Parameter.SafeLength() + 1;
-
-            var arr = right.Split('+');
-
-            if (arr.Length == 1)
-            {
-                var suffixLen = Suffix.SafeLength() == 0 ? 0 : Suffix.SafeLength() + 1;
-
-                var s = arr[0].Substring(treeLen);
-
-                SubType = s.Substring(0, s.Length - (suffixLen + paramLen));
-            }
-            else if (arr.Length == 2)
-            {
-                SubType = arr[0].Substring(treeLen);
-                Suffix = arr[1].Substring(0, arr[1].Length - paramLen);
-            }
-            else
-            {
-                throw new ArgumentException(MalformedMessage);
-            }
-
-            Parameter = Parameter?.Trim();
+            Type = GetType(mediaType);
+            Tree = GetTree(mediaType);
+            SubType = GetSubType(mediaType);
+            Suffix = GetSuffix(mediaType);
+            Parameter = GetParams(mediaType);
         }
 
-        private static string GetType(string[] parts)
+        private static string GetType(string mediaType)
         {
-            if (parts.Length != 2)
-                throw new ArgumentException(MalformedMessage);
+            var match = Regex.Match(mediaType, "^(?<Type>.*)/");
 
-            if (!RegisteredTypes.Contains(parts[0]))
+            var type = match.Groups["Type"].Value;
+
+            if (!RegisteredTypes.Contains(type))
                 throw new ArgumentException("Media type does not have a registered type.");
 
-            return parts[0];
+            return type;
         }
 
-        private static string GetTree(string right)
+        private static string GetSubType(string mediaType)
         {
-            var parts = right.Split('.');
+            var match = Regex.Match(mediaType, @"\/((.*)(\.))*(?<SubType>.*?)((\+|;)|($))");
 
-            if (parts.Length >= 2)
-            {
-                var tree = string.Empty;
-
-                for (var i = 0; i < parts.Length - 1; i++)
-                {
-                    if (tree != string.Empty)
-                        tree += ".";
-
-                    tree += parts[i];
-                }
-
-                return tree;
-            }
-
-            return null;
+            return match.Groups["SubType"].Value;
         }
 
-        // TODO: change so can handle multiple parameters
-
-        private static string GetParameter(string right)
+        private static string GetTree(string mediaType)
         {
-            var parts = right.Split(';');
+            var match = Regex.Match(mediaType, @"\/(?<Tree>.*)\.");
 
-            if (parts.Length == 1)
-                return null;
+            var tree = match.Groups["Tree"].Value;
 
-            if (parts.Length == 2)
-                return parts[1];
+            return tree == string.Empty ? null : tree;
+        }
 
-            throw new ArgumentException(MalformedMessage);
+        private static string GetSuffix(string mediaType)
+        {
+            var match = Regex.Match(mediaType, @"\+(?<Suffix>.*?)((;)|($))");
+
+            var suffix = match.Groups["Suffix"].Value;
+
+            return suffix == string.Empty ? null : suffix;
+        }
+
+        private static string GetParams(string mediaType)
+        {
+            var match = Regex.Match(mediaType, @";\s*(?<Param>.*?)$");
+
+            var param = match.Groups["Param"].Value;
+
+            return param == string.Empty ? null : param;
         }
 
         public override string ToString()
