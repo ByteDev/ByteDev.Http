@@ -115,7 +115,7 @@ namespace ByteDev.Http
         {
             var s = Type + "/";
 
-            if (string.IsNullOrEmpty(Tree))
+            if (Tree == null)
             {
                 s += SubType;
             }
@@ -124,12 +124,12 @@ namespace ByteDev.Http
                 s += Tree + "." + SubType;
             }
 
-            if (!string.IsNullOrEmpty(Suffix))
+            if (Suffix != null)
             {
                 s += "+" + Suffix;
             }
 
-            if (!string.IsNullOrEmpty(Parameter))
+            if (Parameter != null)
             {
                 s += "; " + Parameter;
             }
