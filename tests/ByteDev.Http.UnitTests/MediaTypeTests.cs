@@ -52,7 +52,7 @@ namespace ByteDev.Http.UnitTests
                 Assert.That(sut.Tree, Is.Null);
                 Assert.That(sut.SubType, Is.EqualTo("json"));
                 Assert.That(sut.Suffix, Is.Null);
-                Assert.That(sut.Parameter, Is.Null);
+                Assert.That(sut.Parameters, Is.Empty);
             }
 
             [Test]
@@ -64,7 +64,7 @@ namespace ByteDev.Http.UnitTests
                 Assert.That(sut.Tree, Is.EqualTo("vnd"));
                 Assert.That(sut.SubType, Is.EqualTo("ms-excel"));
                 Assert.That(sut.Suffix, Is.Null);
-                Assert.That(sut.Parameter, Is.Null);
+                Assert.That(sut.Parameters, Is.Empty);
             }
 
             [Test]
@@ -76,7 +76,7 @@ namespace ByteDev.Http.UnitTests
                 Assert.That(sut.Tree, Is.EqualTo("vnd.oasis.opendocument"));
                 Assert.That(sut.SubType, Is.EqualTo("text"));
                 Assert.That(sut.Suffix, Is.Null);
-                Assert.That(sut.Parameter, Is.Null);
+                Assert.That(sut.Parameters, Is.Empty);
             }
 
             [Test]
@@ -88,11 +88,12 @@ namespace ByteDev.Http.UnitTests
                 Assert.That(sut.Tree, Is.EqualTo("vnd"));
                 Assert.That(sut.SubType, Is.EqualTo("api"));
                 Assert.That(sut.Suffix, Is.EqualTo("json"));
-                Assert.That(sut.Parameter, Is.Null);
+                Assert.That(sut.Parameters, Is.Empty);
             }
 
             [TestCase("text/html;charset=UTF-8")]
-            [TestCase("text/html; charset=UTF-8")]
+            [TestCase("text/html; charset=UTF-8 ")]
+            [TestCase("text/html; charset = UTF-8 ")]
             public void WhenContainsParameter_ThenSetProperties(string mediaType)
             {
                 var sut = new MediaType(mediaType);
@@ -101,11 +102,10 @@ namespace ByteDev.Http.UnitTests
                 Assert.That(sut.Tree, Is.Null);
                 Assert.That(sut.SubType, Is.EqualTo("html"));
                 Assert.That(sut.Suffix, Is.Null);
-                Assert.That(sut.Parameter, Is.EqualTo("charset=UTF-8"));
+                Assert.That(sut.Parameters["charset"], Is.EqualTo("UTF-8"));
             }
 
-            [TestCase("text/html;charset=UTF-8; charset=UTF-16")]
-            [TestCase("text/html; charset=UTF-8; charset=UTF-16")]
+            [TestCase("text/html; charset=UTF-8; charset2=UTF-16")]
             public void WhenContainsTwoParameters_ThenSetProperties(string mediaType)
             {
                 var sut = new MediaType(mediaType);
@@ -114,7 +114,8 @@ namespace ByteDev.Http.UnitTests
                 Assert.That(sut.Tree, Is.Null);
                 Assert.That(sut.SubType, Is.EqualTo("html"));
                 Assert.That(sut.Suffix, Is.Null);
-                Assert.That(sut.Parameter, Is.EqualTo("charset=UTF-8; charset=UTF-16"));
+                Assert.That(sut.Parameters["charset"], Is.EqualTo("UTF-8"));
+                Assert.That(sut.Parameters["charset2"], Is.EqualTo("UTF-16"));
             }
 
             [Test]
@@ -126,7 +127,7 @@ namespace ByteDev.Http.UnitTests
                 Assert.That(sut.Tree, Is.EqualTo("vnd"));
                 Assert.That(sut.SubType, Is.EqualTo("api"));
                 Assert.That(sut.Suffix, Is.EqualTo("json"));
-                Assert.That(sut.Parameter, Is.EqualTo("charset=UTF-8"));
+                Assert.That(sut.Parameters["charset"], Is.EqualTo("UTF-8"));
             }
         }
 
@@ -138,7 +139,7 @@ namespace ByteDev.Http.UnitTests
             [TestCase("application/vnd.api; charset=UTF-8")]
             [TestCase("application/vnd.api+json")]
             [TestCase("application/vnd.api+json; charset=UTF-8")]
-            [TestCase("application/vnd.api+json; charset=UTF-8; charset=UTF-16")]
+            [TestCase("application/vnd.api+json; charset=UTF-8; charset2=UTF-16")]
             public void WhenAllPropertiesSet_ThenReturnString(string mediaType)
             {
                 var sut = new MediaType(mediaType);

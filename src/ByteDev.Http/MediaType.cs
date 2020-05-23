@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace ByteDev.Http
@@ -39,7 +38,7 @@ namespace ByteDev.Http
 
         public string Suffix { get; }
 
-        public string Parameter { get; }
+        public IDictionary<string, string> Parameters { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ByteDev.Http.MediaType" /> class.
@@ -62,7 +61,7 @@ namespace ByteDev.Http
             Tree = GetTree(mediaType);
             SubType = GetSubType(mediaType);
             Suffix = GetSuffix(mediaType);
-            Parameter = GetParams(mediaType);
+            Parameters = GetParams(mediaType);
         }
 
         private static string GetType(string mediaType)
@@ -102,13 +101,27 @@ namespace ByteDev.Http
             return suffix == string.Empty ? null : suffix;
         }
 
-        private static string GetParams(string mediaType)
+        private static IDictionary<string, string> GetParams(string mediaType)
         {
-            var match = Regex.Match(mediaType, @";\s*(?<Param>.*?)$");
+            var match = Regex.Match(mediaType, @";\s*(?<Params>.*?)$");
 
-            var param = match.Groups["Param"].Value;
+            var parameters = match.Groups["Params"].Value;
 
-            return param == string.Empty ? null : param;
+            var dict = new Dictionary<string, string>();
+
+            if (parameters == string.Empty)
+                return dict;
+
+            var nameValuePairs = parameters.Trim().Split(';');
+
+            foreach (var nameValuePair in nameValuePairs)
+            {
+                var pair = nameValuePair.Split('=');
+
+                dict.Add(pair[0].Trim(), pair.Length > 1 ? pair[1].Trim() : null);
+            }
+
+            return dict;
         }
 
         public override string ToString()
@@ -129,9 +142,9 @@ namespace ByteDev.Http
                 s += "+" + Suffix;
             }
 
-            if (Parameter != null)
+            foreach (var param in Parameters)
             {
-                s += "; " + Parameter;
+                s += $"; {param.Key}={param.Value}";
             }
 
             return s;
