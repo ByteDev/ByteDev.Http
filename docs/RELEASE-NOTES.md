@@ -1,12 +1,13 @@
 # Release Notes
 
-## 1.1.0 - 23 May 2020
+## 1.1.0 - 28 May 2020
 
 Breaking changes:
 - (None)
 
 New features:
 - Added MediaType
+- Added MediaTypes
 
 Bug fixes / internal changes:
 - (None)

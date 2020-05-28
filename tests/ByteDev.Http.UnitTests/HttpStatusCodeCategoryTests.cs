@@ -7,12 +7,12 @@ namespace ByteDev.Http.UnitTests
     public class HttpStatusCodeCategoryTests
     {
         [TestFixture]
-        public class CreateFromCode
+        public class CreateFromCategoryCode
         {
             [Test]
             public void WhenCategoryDoesNotExist_ThenThrowException()
             {
-                Assert.Throws<ArgumentException>(() => HttpStatusCodeCategory.CreateFromCode(6));
+                Assert.Throws<ArgumentException>(() => HttpStatusCodeCategory.CreateFromCategoryCode(6));
             }
 
             [TestCase(1, "Informational")]
@@ -22,7 +22,7 @@ namespace ByteDev.Http.UnitTests
             [TestCase(5, "Server Error")]
             public void WhenCategoryExists_ThenReturnCategory(int code, string name)
             {
-                var result = HttpStatusCodeCategory.CreateFromCode(code);
+                var result = HttpStatusCodeCategory.CreateFromCategoryCode(code);
 
                 Assert.That(result.Code, Is.EqualTo(code));
                 Assert.That(result.Name, Is.EqualTo(name));

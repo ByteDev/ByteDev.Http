@@ -45,7 +45,7 @@ namespace ByteDev.Http
         /// <param name="categoryCode">Category code.</param>
         /// <returns>New instance of <see cref="T:ByteDev.Http.HttpStatusCodeCategory" />.</returns>
         /// <exception cref="T:System.ArgumentException">No HTTP status code category exists with <paramref name="categoryCode" />.</exception>
-        public static HttpStatusCodeCategory CreateFromCode(int categoryCode)
+        public static HttpStatusCodeCategory CreateFromCategoryCode(int categoryCode)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace ByteDev.Http
             {
                 var categoryCode = GetFirstDigit(httpStatusCode);
 
-                return CreateFromCode(categoryCode);
+                return CreateFromCategoryCode(categoryCode);
             }
             catch (ArgumentException ex)
             {

@@ -30,10 +30,29 @@ The repo can be cloned from git bash:
 
 ## Usage
 
+Library currently consists of two main classes: `HttpStatusCode` and `MediaType`.
+
+### HttpStatusCode
+
 ```csharp
 HttpStatusCode statusCode = HttpStatusCode.CreateFromCode(404);
 
-Console.WriteLine(statusCode.Code);
-Console.WriteLine(statusCode.Name);
-Console.WriteLine(statusCode.Category);
+Console.WriteLine(statusCode.Code);                 // 404
+Console.WriteLine(statusCode.Name);                 // Not Found
+Console.WriteLine(statusCode.Category.Code);        // 4
+Console.WriteLine(statusCode.Category.Name);        // Client Error
+Console.WriteLine(statusCode.Category.Description); // Request contains bad syntax or cannot be fulfilled.
+```
+
+### MediaType
+
+```csharp
+var mediaType = new MediaType("application/vnd.api+json; charset=UTF-8");
+
+Console.WriteLine(mediaType);                       // application/vnd.api+json; charset=UTF-8
+Console.WriteLine(mediaType.Type);                  // application
+Console.WriteLine(mediaType.Tree);                  // vnd
+Console.WriteLine(mediaType.SubType);               // api
+Console.WriteLine(mediaType.Suffix);                // json
+Console.WriteLine(mediaType.Parameters["charset"]); // UTF-8
 ```
