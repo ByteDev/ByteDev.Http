@@ -56,3 +56,32 @@ Console.WriteLine(mediaType.SubType);               // api
 Console.WriteLine(mediaType.Suffix);                // json
 Console.WriteLine(mediaType.Parameters["charset"]); // UTF-8
 ```
+
+### FormUrlEncodedSerializer
+
+Located in the namespace: `ByteDev.Http.FormUrlEncoded.Serialization`. 
+
+Supports all built .NET basic types (primitives, decimal, string, object etc.).
+
+**Serialize**
+```csharp
+var obj = new TestDummy
+{
+    SomeString = "Test String",
+    SomeInt = 10
+};
+
+var result = FormUrlEncodedSerializer.Serialize(obj);
+
+Console.WriteLine(result);          // "SomeString=Test+String&SomeInt=10"
+```
+
+**Deserialize**
+```csharp
+string data = "SomeString=Test+String&SomeInt=10";
+
+var result = FormUrlEncodedSerializer.Deserialize<TestDummy>(data);
+
+Console.WriteLine(result.SomeString);       // "Test String"
+Console.WriteLine(result.SomeInt);          // 10
+```
