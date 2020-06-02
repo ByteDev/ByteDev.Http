@@ -8,7 +8,7 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
     public class FormUrlEncodedSerializerTests
     {
         [TestFixture]
-        public class Serialize : FormUrlEncodedSerializerTests
+        public class Serialize
         {
             [Test]
             public void WhenIsNull_ThenThrowException()
@@ -29,11 +29,11 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
             [Test]
             public void WhenNonStringNotSet_ThenReturnDefaults()
             {
-                var obj = new TestDummyNonString();
+                var obj = new TestDummyBuiltInValueTypes();
                 
                 var result = FormUrlEncodedSerializer.Serialize(obj);
 
-                Assert.That(result, Is.EqualTo("Bool=False&Char=%00&Byte=0&Short=0&Int=0&Long=0&Float=0&Double=0"));
+                Assert.That(result, Is.EqualTo("Bool=False&Char=%00&Byte=0&Short=0&Int=0&Long=0&SByte=0&UShort=0&UInt=0&ULong=0&Float=0&Double=0&Decimal=0"));
             }
 
             [Test]
@@ -126,7 +126,7 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
         }
 
         [TestFixture]
-        public class Deserialize : FormUrlEncodedSerializerTests
+        public class Deserialize
         {
             [Test]
             public void WhenIsNull_ThenThrowException()
@@ -235,20 +235,49 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
             }
 
             [Test]
-            public void WhenTypeNotString_ThenDoConvertType()
+            public void WhenTypeIsPrimative_ThenDoConvertType()
             {
-                const string data = "Bool=true&Char=A&Byte=128&Short=5&Int=10&Long=20&Float=1.1&Double=1.2&Obj=123";
+                const string data = "Bool=true&"+
+                                    "Char=A&"+
+                                    "Byte=128&"+
+                                    "Short=5&"+
+                                    "Int=10&"+
+                                    "Long=20&"+
+                                    "SByte=1&"+
+                                    "UShort=21&"+
+                                    "UInt=31&"+
+                                    "ULong=41&"+
+                                    "Float=1.1&"+
+                                    "Double=1.2&"+
+                                    "Decimal=123.45";
 
-                var result = FormUrlEncodedSerializer.Deserialize<TestDummyNonString>(data);
+                var result = FormUrlEncodedSerializer.Deserialize<TestDummyBuiltInValueTypes>(data);
 
                 Assert.That(result.Bool, Is.True);
                 Assert.That(result.Char, Is.EqualTo('A'));
+                
                 Assert.That(result.Byte, Is.EqualTo(128));
                 Assert.That(result.Short, Is.EqualTo(5));
                 Assert.That(result.Int, Is.EqualTo(10));
                 Assert.That(result.Long, Is.EqualTo(20));
+
+                Assert.That(result.SByte, Is.EqualTo(1));
+                Assert.That(result.UShort, Is.EqualTo(21));
+                Assert.That(result.UInt, Is.EqualTo(31));
+                Assert.That(result.ULong, Is.EqualTo(41));
+
                 Assert.That(result.Float, Is.EqualTo(1.1f));
                 Assert.That(result.Double, Is.EqualTo(1.2d));
+                Assert.That(result.Decimal, Is.EqualTo(123.45M));
+            }
+
+            [Test]
+            public void WhenTypeIsObject_ThenCallToString()
+            {
+                const string data = "Obj=123";
+
+                var result = FormUrlEncodedSerializer.Deserialize<TestDummyBuiltInRefTypes>(data);
+
                 Assert.That(result.Obj, Is.EqualTo("123"));
             }
 

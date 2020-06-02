@@ -1,6 +1,6 @@
 ﻿namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
 {
-    internal class TestDummyNonString
+    internal class TestDummyBuiltInValueTypes
     {
         public bool Bool { get; set; }
 
@@ -14,17 +14,18 @@
 
         public long Long { get; set; }
 
+        public sbyte SByte { get; set; }
+        
+        public ushort UShort { get; set; }
+
+        public uint UInt { get; set; }
+
+        public ulong ULong { get; set; }
+
         public float Float { get; set; }
 
         public double Double { get; set; }
 
-        public object Obj { get; set; }
-        
-        /*
-        - SByte
-        - UInt16
-        - UInt32
-        - UInt64
-        */
+        public decimal Decimal { get; set; }
     }
 }
