@@ -71,17 +71,17 @@ var obj = new TestDummy
     SomeInt = 10
 };
 
-var result = FormUrlEncodedSerializer.Serialize(obj);
+string data = FormUrlEncodedSerializer.Serialize(obj);
 
-Console.WriteLine(result);          // "SomeString=Test+String&SomeInt=10"
+Console.WriteLine(data);          // "SomeString=Test+String&SomeInt=10"
 ```
 
 **Deserialize**
 ```csharp
 string data = "SomeString=Test+String&SomeInt=10";
 
-var result = FormUrlEncodedSerializer.Deserialize<TestDummy>(data);
+TestDummy dummy = FormUrlEncodedSerializer.Deserialize<TestDummy>(data);
 
-Console.WriteLine(result.SomeString);       // "Test String"
-Console.WriteLine(result.SomeInt);          // 10
+Console.WriteLine(dummy.SomeString);       // "Test String"
+Console.WriteLine(dummy.SomeInt);          // 10
 ```
