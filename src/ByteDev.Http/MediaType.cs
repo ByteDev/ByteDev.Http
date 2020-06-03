@@ -9,10 +9,15 @@ namespace ByteDev.Http
     /// Mail Extensions or MIME type. As defined in RFC 6838.
     /// </summary>
     /// <remarks>
+    /// Media types have the form:
+    /// "type/[tree.]subtype[+suffix] [;parameter]*"
     /// See: https://tools.ietf.org/html/rfc6838
     /// </remarks>
     public class MediaType
     {
+        /// <summary>
+        /// Current registered main types.
+        /// </summary>
         public static readonly HashSet<string> RegisteredTypes = new HashSet<string>
         {
             "application",
@@ -28,23 +33,36 @@ namespace ByteDev.Http
         };
 
         /// <summary>
-        /// Type. Such as application, image, text etc.
+        /// Main type. Such as application, image etc.
         /// </summary>
         public string Type { get; }
 
+        /// <summary>
+        /// Tree. Any part after the forward slash but before the last period.
+        /// </summary>
         public string Tree { get; }
 
+        /// <summary>
+        /// Sub type. Part after the forward slash and any last period, but
+        /// before any suffix.
+        /// </summary>
         public string SubType { get; }
 
+        /// <summary>
+        /// Suffix. Any part after the plus sign but before any parameters.
+        /// </summary>
         public string Suffix { get; }
 
+        /// <summary>
+        /// Parameters. Any name value parameters specified after a semicolon.
+        /// </summary>
         public IDictionary<string, string> Parameters { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ByteDev.Http.MediaType" /> class.
         /// </summary>
         /// <param name="mediaType">
-        /// A media type in format: "type/[tree.]subtype[+suffix] [;parameter]"
+        /// A media type in format: "type/[tree.]subtype[+suffix] [;parameter]*"
         /// </param>
         public MediaType(string mediaType)
         {

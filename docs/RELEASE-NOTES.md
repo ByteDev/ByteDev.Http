@@ -1,5 +1,17 @@
 # Release Notes
 
+## 1.3.0 - 03 June 2020
+
+Breaking changes:
+- (None)
+
+New features:
+- Added overloads for FormUrlEncodedSerializer.Serialize and Deserialize
+
+Bug fixes:
+- Modified nuspec
+- Added complete XML documentation to public properties and methods
+
 ## 1.2.0 - 02 June 2020
 
 Breaking changes:

@@ -11,9 +11,15 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
         public class Serialize
         {
             [Test]
-            public void WhenIsNull_ThenThrowException()
+            public void WhenObjectIsNull_ThenThrowException()
             {
                 Assert.Throws<ArgumentNullException>(() => FormUrlEncodedSerializer.Serialize(null));
+            }
+
+            [Test]
+            public void WhenOptionsIsNull_ThenThrowException()
+            {
+                Assert.Throws<ArgumentNullException>(() => FormUrlEncodedSerializer.Serialize(new TestDummyString(), null));
             }
 
             [Test]
@@ -129,15 +135,21 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
         public class Deserialize
         {
             [Test]
-            public void WhenIsNull_ThenThrowException()
+            public void WhenDataIsNull_ThenThrowException()
             {
                 Assert.Throws<ArgumentException>(() => FormUrlEncodedSerializer.Deserialize<TestDummyString>(null));
             }
 
             [Test]
-            public void WhenIsEmpty_ThenThrowException()
+            public void WhenDataIsEmpty_ThenThrowException()
             {
                 Assert.Throws<ArgumentException>(() => FormUrlEncodedSerializer.Deserialize<TestDummyString>(string.Empty));
+            }
+
+            [Test]
+            public void WhenOptionsIsNull_ThenThrowException()
+            {
+                Assert.Throws<ArgumentNullException>(() => FormUrlEncodedSerializer.Deserialize<TestDummyString>("n=1", null));
             }
 
             [Test]

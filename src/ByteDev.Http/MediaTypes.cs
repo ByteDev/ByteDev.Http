@@ -54,6 +54,8 @@
             public static readonly string Json = "application/json";
 
             public static readonly string Xml = "application/xml";
+
+            public static readonly string FormUrlEncoded = "application/x-www-form-urlencoded";
         }
     }
 }

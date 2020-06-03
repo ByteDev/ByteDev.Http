@@ -3,15 +3,37 @@ using System.Text;
 
 namespace ByteDev.Http.FormUrlEncoded.Serialization
 {
+    /// <summary>
+    /// Represents a serializer for form URL encoded (x-www-form-urlencoded) content.
+    /// </summary>
     public static class FormUrlEncodedSerializer
     {
-        public static string Serialize(object obj, SerializeOptions options = null)
+        /// <summary>
+        /// Serialize an object to a form URL encoded string.
+        /// </summary>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns>Form URL encoded string.</returns>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="obj" /> is null.</exception>
+        public static string Serialize(object obj)
+        {
+            return Serialize(obj, new SerializeOptions());
+        }
+
+        /// <summary>
+        /// Serialize an object to a form URL encoded string.
+        /// </summary>
+        /// <param name="obj">Object to serialize.</param>
+        /// <param name="options">Serialize options.</param>
+        /// <returns>Form URL encoded string.</returns>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="obj" /> is null.</exception>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="options" /> is null.</exception>
+        public static string Serialize(object obj, SerializeOptions options)
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
 
             if (options == null)
-                options = new SerializeOptions();
+                throw new ArgumentNullException(nameof(options));
 
             var keyValues = obj.GetPropertiesAsDictionary();
 
@@ -22,23 +44,44 @@ namespace ByteDev.Http.FormUrlEncoded.Serialization
                 if (sb.Length > 0)
                     sb.Append('&');
 
-                sb.Append(Encode(keyValue.Key, options));
+                sb.Append(FormUrlEncodedEncoder.Encode(keyValue.Key, options));
                 sb.Append("=");
-                sb.Append(Encode(keyValue.Value, options));
+                sb.Append(FormUrlEncodedEncoder.Encode(keyValue.Value, options));
             }
 
             return sb.ToString();
         }
 
-        public static T Deserialize<T>(string formUrlEncodedText, DeserializeOptions options = null) where T : new()
+        /// <summary>
+        /// Deserialize a form URL encoded string to an object.
+        /// </summary>
+        /// <typeparam name="T">Type of object to deserialize to.</typeparam>
+        /// <param name="formUrlEncodedData">Form URL encoded string to deserialize.</param>
+        /// <returns>Object of type <typeparamref name="T" />.</returns>
+        /// <exception cref="T:System.ArgumentException"><paramref name="formUrlEncodedData" /> is null or empty.</exception>
+        public static T Deserialize<T>(string formUrlEncodedData) where T : new()
         {
-            if (string.IsNullOrEmpty(formUrlEncodedText))
-                throw new ArgumentException("Form URL Encoded text was null or empty.", nameof(formUrlEncodedText));
+            return Deserialize<T>(formUrlEncodedData, new DeserializeOptions());
+        }
+
+        /// <summary>
+        /// Deserialize a form URL encoded string to an object.
+        /// </summary>
+        /// <typeparam name="T">Type of object to deserialize to.</typeparam>
+        /// <param name="formUrlEncodedData">Form URL encoded string to deserialize.</param>
+        /// <param name="options">Deserialize options.</param>
+        /// <returns>Object of type <typeparamref name="T" />.</returns>
+        /// <exception cref="T:System.ArgumentException"><paramref name="formUrlEncodedData" /> is null or empty.</exception>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="options" /> is null.</exception>
+        public static T Deserialize<T>(string formUrlEncodedData, DeserializeOptions options) where T : new()
+        {
+            if (string.IsNullOrEmpty(formUrlEncodedData))
+                throw new ArgumentException("Form URL encoded data was null or empty.", nameof(formUrlEncodedData));
 
             if (options == null)
-                options = new DeserializeOptions();
+                throw new ArgumentNullException(nameof(options));
 
-            var pairs = formUrlEncodedText.Split('&');
+            var pairs = formUrlEncodedData.Split('&');
 
             var obj = new T();
 
@@ -48,8 +91,8 @@ namespace ByteDev.Http.FormUrlEncoded.Serialization
 
                 if (HasValue(nameValue))
                 {
-                    var name = Decode(nameValue[0], options);
-                    var value = Decode(nameValue[1], options);
+                    var name = FormUrlEncodedEncoder.Decode(nameValue[0], options);
+                    var value = FormUrlEncodedEncoder.Decode(nameValue[1], options);
 
                     obj.SetPublicProperty(name, value);
                 }
@@ -61,40 +104,6 @@ namespace ByteDev.Http.FormUrlEncoded.Serialization
         private static bool HasValue(string[] nameValue)
         {
             return nameValue.Length == 2 && nameValue[1] != string.Empty;
-        }
-
-        private static string Encode(string value, SerializeOptions options)
-        {
-            if (string.IsNullOrEmpty(value))
-                return string.Empty;
-
-            if (!options.Encode)
-                return value;
-
-            var escapedValue = Uri.EscapeDataString(value);
-
-            if (options.EncodeSpaceAsPlus)
-            {
-                return escapedValue.Replace("%20", "+");
-            }
-
-            return escapedValue;
-        }
-
-        private static string Decode(string value, DeserializeOptions options)
-        {
-            if (string.IsNullOrEmpty(value))
-                return string.Empty;
-
-            if (!options.Decode)
-                return value;
-
-            var unescapedValue = value;
-
-            if (options.DecodePlusAsSpace)
-                unescapedValue = unescapedValue.Replace("+", "%20");
-
-            return Uri.UnescapeDataString(unescapedValue);
         }
     }
 }
