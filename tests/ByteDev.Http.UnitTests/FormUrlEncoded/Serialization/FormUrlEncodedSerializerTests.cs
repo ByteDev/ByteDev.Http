@@ -129,6 +129,16 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
 
                 Assert.That(result, Is.EqualTo("String=john smith"));
             }
+
+            [Test]
+            public void WhenClassUsesAttribute_ThenTakeNameFromAttribute()
+            {
+                var obj = new TestDummyAttributes { Name = "John", Email = "somewhere" };
+
+                var result = FormUrlEncodedSerializer.Serialize(obj);
+
+                Assert.That(result, Is.EqualTo("Name=John&emailAddress=somewhere"));
+            }
         }
 
         [TestFixture]
@@ -291,6 +301,17 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
                 var result = FormUrlEncodedSerializer.Deserialize<TestDummyBuiltInRefTypes>(data);
 
                 Assert.That(result.Obj, Is.EqualTo("123"));
+            }
+
+            [Test]
+            public void WhenClassUsesAttribute_ThenTakeNameFromAttribute()
+            {
+                const string data = "Name=John&emailAddress=somewhere";
+
+                var result = FormUrlEncodedSerializer.Deserialize<TestDummyAttributes>(data);
+
+                Assert.That(result.Name, Is.EqualTo("John"));
+                Assert.That(result.Email, Is.EqualTo("somewhere"));
             }
 
             private static void AssertPropertiesAreDefault(TestDummyString result)

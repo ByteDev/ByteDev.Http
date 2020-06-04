@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace ByteDev.Http.FormUrlEncoded.Serialization
@@ -85,16 +86,27 @@ namespace ByteDev.Http.FormUrlEncoded.Serialization
 
             var obj = new T();
 
+            var propertiesWithAttr = typeof(T).GetPropertiesWithAttribute<FormUrlEncodedPropertyNameAttribute>().ToList();
+
             foreach (var pair in pairs)
             {
                 var nameValue = pair.Split('=');
 
-                if (HasValue(nameValue))
-                {
-                    var name = FormUrlEncodedEncoder.Decode(nameValue[0], options);
-                    var value = FormUrlEncodedEncoder.Decode(nameValue[1], options);
+                if (!HasValue(nameValue))
+                    continue;
 
+                var name = FormUrlEncodedEncoder.Decode(nameValue[0], options);
+                var value = FormUrlEncodedEncoder.Decode(nameValue[1], options);
+
+                var attrProperty = propertiesWithAttr.SingleOrDefault(p => p.GetAttributeName() == name);
+
+                if (attrProperty == null)
+                {
                     obj.SetPublicProperty(name, value);
+                }
+                else
+                {
+                    obj.SetPublicProperty(attrProperty.Name, value);
                 }
             }
 

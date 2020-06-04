@@ -1,5 +1,16 @@
 # Release Notes
 
+## 1.4.0 - ?? June 2020
+
+Breaking changes:
+- (None)
+
+New features:
+- Added FormUrlEncodedPropertyNameAttribute
+
+Bug fixes:
+- (None)
+
 ## 1.3.0 - 03 June 2020
 
 Breaking changes:
