@@ -78,6 +78,16 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
                 Assert.That(result, Is.EqualTo("String=john+smith"));
             }
 
+            [Test]
+            public void WhenPropertyNamePrefixAmpersand_ThenIgnoreAmpersand()
+            {
+                var obj = new TestDummyAtPropertyName {set = "something" };
+
+                var result = FormUrlEncodedSerializer.Serialize(obj);
+
+                Assert.That(result, Is.EqualTo("set=something"));
+            }
+
             // RFC 3986 section 2.2 Reserved Characters (January 2005)
             [TestCase("!", "%21")]
             [TestCase("#", "%23")]
@@ -105,7 +115,7 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
 
                 Assert.That(result, Is.EqualTo("String=" + expected));
             }
-
+            
             // RFC 3986 section 2.3 Unreserved Characters (January 2005)
             [TestCase("ABCDEFGHIJKLMNOPQRSTUVWXYZ")]
             [TestCase("abcdefghijklmnopqrstuvwxyz")]
@@ -325,6 +335,16 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
                 var result = FormUrlEncodedSerializer.Deserialize<TestDummyBuiltInRefTypes>(data);
 
                 Assert.That(result.Obj, Is.EqualTo("123"));
+            }
+
+            [Test]
+            public void WhenPropertyNamePrefixAmpersand_ThenIgnoreAmpersand()
+            {
+                const string data = "set=something";
+                
+                var result = FormUrlEncodedSerializer.Deserialize<TestDummyAtPropertyName>(data);
+
+                Assert.That(result.set, Is.EqualTo("something"));
             }
 
             private static void AssertPropertiesAreDefault(TestDummyString result)
