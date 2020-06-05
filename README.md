@@ -30,9 +30,16 @@ The repo can be cloned from git bash:
 
 ## Usage
 
-Library currently consists of two main classes: `HttpStatusCode` and `MediaType`.
+Library currently consists of the following main classes:
+- `HttpStatusCode`
+- `MediaType`
+- `FormUrlEncodedSerializer`
 
 ### HttpStatusCode
+
+Represents a standard HTTP status code with extended information.
+
+Located in namespace: `ByteDev.Http`.
 
 ```csharp
 HttpStatusCode statusCode = HttpStatusCode.CreateFromCode(404);
@@ -45,6 +52,10 @@ Console.WriteLine(statusCode.Category.Description); // Request contains bad synt
 ```
 
 ### MediaType
+
+Represents an internet media type. Also known as a Multipurpose Internet Mail Extensions (MIME) type.
+
+Located in namespace: `ByteDev.Http`.
 
 ```csharp
 var mediaType = new MediaType("application/vnd.api+json; charset=UTF-8");
@@ -59,29 +70,60 @@ Console.WriteLine(mediaType.Parameters["charset"]); // UTF-8
 
 ### FormUrlEncodedSerializer
 
-Located in the namespace: `ByteDev.Http.FormUrlEncoded.Serialization`. 
+Represents a serializer for form URL encoded (x-www-form-urlencoded) content.
 
-Supports all built .NET basic types (primitives, decimal, string, object etc.).
+Located in namespace: `ByteDev.Http.FormUrlEncoded.Serialization`. 
+
+Supports:
+- All built .NET basic types (primitives, decimal, string, object etc.)
+- Options for switching on and off encoding/decoding of characters through the `SerializeOptions` and `DeserializeOptions` type parameters.
+- `FormUrlEncodedPropertyNameAttribute` on properties to override the property name to use when serializing/deserializing
+
+#### Example Usage
+
+**Entity class**
+
+The class you want to serialize/deserialize.
+
+```csharp
+public class Dummy
+{
+    public string Name { get; set; }
+
+    public int Age { get; set; }
+
+    [FormUrlEncodedPropertyName("emailAddress")]
+    public string Email { get; set; }
+}
+```
 
 **Serialize**
+
+Serialize an object to a form URL encoded string.
+
 ```csharp
-var obj = new TestDummy
+var dummy = new Dummy
 {
-    SomeString = "Test String",
-    SomeInt = 10
+    Name = "John Smith",
+    Age = 50,
+    Email = "john@somewhere.com"
 };
 
-string data = FormUrlEncodedSerializer.Serialize(obj);
+string data = FormUrlEncodedSerializer.Serialize(dummy);
 
-Console.WriteLine(data);          // "SomeString=Test+String&SomeInt=10"
+Console.WriteLine(data);   // "Name=John+Smith&Age=50&emailAddress=john%40somewhere.com"
 ```
 
 **Deserialize**
+
+Deserialize a form URL encoded string to an object.
+
 ```csharp
-string data = "SomeString=Test+String&SomeInt=10";
+string data = "Name=John+Smith&Age=50&emailAddress=john%40somewhere.com";
 
-TestDummy dummy = FormUrlEncodedSerializer.Deserialize<TestDummy>(data);
+Dummy dummy = FormUrlEncodedSerializer.Deserialize<Dummy>(data);
 
-Console.WriteLine(dummy.SomeString);       // "Test String"
-Console.WriteLine(dummy.SomeInt);          // 10
+Console.WriteLine(dummy.Name);    // "John Smith"
+Console.WriteLine(dummy.Age);     // 50
+Console.WriteLine(dummy.Email);   // "john@somewhere.com"
 ```

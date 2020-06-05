@@ -147,11 +147,11 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
             [Test]
             public void WhenAttributeNameSpecified_ThenTakeNameFromAttribute()
             {
-                var obj = new TestDummyAttributes { Name = "John", Email = "somewhere" };
+                var obj = new TestDummyAttributes { Name = "John", Email = "john@somewhere.com" };
 
                 var result = FormUrlEncodedSerializer.Serialize(obj);
 
-                Assert.That(result, Is.EqualTo("Name=John&emailAddress=somewhere"));
+                Assert.That(result, Is.EqualTo("Name=John&emailAddress=john%40somewhere.com"));
             }
 
             [Test]
