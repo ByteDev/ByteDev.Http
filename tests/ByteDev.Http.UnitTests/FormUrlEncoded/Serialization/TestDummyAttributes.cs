@@ -9,4 +9,16 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
         [FormUrlEncodedPropertyName("emailAddress")]
         public string Email { get; set; }
     }
+
+    internal class TestDummyNullAttributeName
+    {
+        [FormUrlEncodedPropertyName(null)]
+        public string Email { get; set; }
+    }
+
+    internal class TestDummyEmptyAttributeName
+    {
+        [FormUrlEncodedPropertyName("")]
+        public string Email { get; set; }
+    }
 }

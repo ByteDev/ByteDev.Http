@@ -6,13 +6,20 @@ namespace ByteDev.Http.FormUrlEncoded.Serialization
 {
     internal static class PropertyInfoExtensions
     {
-        public static string GetPropertyName(this PropertyInfo source)
+        public static string GetAttributeOrPropertyName(this PropertyInfo source)
         {
             var attribute = source.GetCustomAttributes(typeof(FormUrlEncodedPropertyNameAttribute), false).SingleOrDefault();
 
             if (attribute != null)
-                return ((FormUrlEncodedPropertyNameAttribute) attribute).Name;
+            {
+                var furpnAttribute = (FormUrlEncodedPropertyNameAttribute)attribute;
 
+                if (!string.IsNullOrEmpty(furpnAttribute.Name))
+                {
+                    return furpnAttribute.Name;
+                }
+            }
+                
             return source.Name;
         }
 

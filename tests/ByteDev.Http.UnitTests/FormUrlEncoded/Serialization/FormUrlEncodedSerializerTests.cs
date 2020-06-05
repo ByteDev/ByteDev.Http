@@ -129,15 +129,39 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
 
                 Assert.That(result, Is.EqualTo("String=john smith"));
             }
+        }
 
+        [TestFixture]
+        public class Serialize_Attribute
+        {
             [Test]
-            public void WhenClassUsesAttribute_ThenTakeNameFromAttribute()
+            public void WhenAttributeNameSpecified_ThenTakeNameFromAttribute()
             {
                 var obj = new TestDummyAttributes { Name = "John", Email = "somewhere" };
 
                 var result = FormUrlEncodedSerializer.Serialize(obj);
 
                 Assert.That(result, Is.EqualTo("Name=John&emailAddress=somewhere"));
+            }
+
+            [Test]
+            public void WhenAttributeNameIsNull_ThenTakeNameFromProperty()
+            {
+                var obj = new TestDummyNullAttributeName { Email = "somewhere" };
+
+                var result = FormUrlEncodedSerializer.Serialize(obj);
+
+                Assert.That(result, Is.EqualTo("Email=somewhere"));
+            }
+
+            [Test]
+            public void WhenAttributeNameIsEmpty_ThenTakeNameFromProperty()
+            {
+                var obj = new TestDummyEmptyAttributeName { Email = "somewhere" };
+
+                var result = FormUrlEncodedSerializer.Serialize(obj);
+
+                Assert.That(result, Is.EqualTo("Email=somewhere"));
             }
         }
 
@@ -303,8 +327,18 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
                 Assert.That(result.Obj, Is.EqualTo("123"));
             }
 
+            private static void AssertPropertiesAreDefault(TestDummyString result)
+            {
+                Assert.That(result.String, Is.EqualTo(default(string)));
+                Assert.That(result.AnotherString, Is.EqualTo(default(string)));
+            }
+        }
+
+        [TestFixture]
+        public class Deserialize_Attribute
+        {
             [Test]
-            public void WhenClassUsesAttribute_ThenTakeNameFromAttribute()
+            public void WhenUsesAttribute_ThenTakeNameFromAttribute()
             {
                 const string data = "Name=John&emailAddress=somewhere";
 
@@ -314,10 +348,24 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
                 Assert.That(result.Email, Is.EqualTo("somewhere"));
             }
 
-            private static void AssertPropertiesAreDefault(TestDummyString result)
+            [Test]
+            public void WhenAttributeNameIsNull_ThenTakeNameFromProperty()
             {
-                Assert.That(result.String, Is.EqualTo(default(string)));
-                Assert.That(result.AnotherString, Is.EqualTo(default(string)));
+                const string data = "Email=somewhere";
+
+                var result = FormUrlEncodedSerializer.Deserialize<TestDummyNullAttributeName>(data);
+
+                Assert.That(result.Email, Is.EqualTo("somewhere"));
+            }
+
+            [Test]
+            public void WhenAttributeNameIsEmpty_ThenTakeNameFromProperty()
+            {
+                const string data = "Email=somewhere";
+
+                var result = FormUrlEncodedSerializer.Deserialize<TestDummyEmptyAttributeName>(data);
+
+                Assert.That(result.Email, Is.EqualTo("somewhere"));
             }
         }
     }}

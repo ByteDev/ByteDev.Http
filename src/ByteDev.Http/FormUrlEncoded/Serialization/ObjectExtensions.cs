@@ -82,7 +82,7 @@ namespace ByteDev.Http.FormUrlEncoded.Serialization
                 if (value == null)
                     continue;
 
-                dict.Add(property.GetPropertyName(), value.ToString());
+                dict.Add(property.GetAttributeOrPropertyName(), value.ToString());
             }
 
             return dict;
