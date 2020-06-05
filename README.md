@@ -75,7 +75,7 @@ Represents a serializer for form URL encoded (x-www-form-urlencoded) content.
 Located in namespace: `ByteDev.Http.FormUrlEncoded.Serialization`. 
 
 Supports:
-- All built .NET basic types (primitives, decimal, string, object etc.)
+- All built in .NET basic types (primitives, decimal, string, object etc.)
 - Options for switching on and off encoding/decoding of characters through the `SerializeOptions` and `DeserializeOptions` type parameters.
 - `FormUrlEncodedPropertyNameAttribute` on properties to override the property name to use when serializing/deserializing
 
