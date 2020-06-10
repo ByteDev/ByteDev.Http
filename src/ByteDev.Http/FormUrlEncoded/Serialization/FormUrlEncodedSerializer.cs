@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using ByteDev.Reflection;
 
 namespace ByteDev.Http.FormUrlEncoded.Serialization
 {
@@ -102,11 +103,11 @@ namespace ByteDev.Http.FormUrlEncoded.Serialization
 
                 if (attrProperty == null)
                 {
-                    obj.SetPublicProperty(name, value);
+                    obj.SetPropertyValue(name, value);
                 }
                 else
                 {
-                    obj.SetPublicProperty(attrProperty.Name, value);
+                    obj.SetPropertyValue(attrProperty.Name, value);
                 }
             }
 

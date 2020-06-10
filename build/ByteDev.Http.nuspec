@@ -12,7 +12,9 @@
     <tags>http httpstatuscode statuscode mediatype contenttype mimetype formurlencoded serialization serializer</tags>
 	  <icon>images\icon.png</icon>
     <dependencies>
-      <group targetFramework=".NETStandard2.0" />
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="ByteDev.Reflection" version="2.0.0" />
+      </group>
     </dependencies>
   </metadata>
   <files>

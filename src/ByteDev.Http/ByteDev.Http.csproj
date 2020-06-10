@@ -10,4 +10,8 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ByteDev.Reflection" Version="2.0.0" />
+  </ItemGroup>
+
 </Project>
