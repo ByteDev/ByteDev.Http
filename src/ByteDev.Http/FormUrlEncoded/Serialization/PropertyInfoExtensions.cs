@@ -10,10 +10,8 @@ namespace ByteDev.Http.FormUrlEncoded.Serialization
         {
             var attribute = source.GetCustomAttributes(typeof(FormUrlEncodedPropertyNameAttribute), false).SingleOrDefault();
 
-            if (attribute != null)
+            if (attribute is FormUrlEncodedPropertyNameAttribute furpnAttribute)
             {
-                var furpnAttribute = (FormUrlEncodedPropertyNameAttribute)attribute;
-
                 if (!string.IsNullOrEmpty(furpnAttribute.Name))
                 {
                     return furpnAttribute.Name;
