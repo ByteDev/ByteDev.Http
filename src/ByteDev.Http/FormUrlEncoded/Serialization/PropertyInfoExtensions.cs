@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 
 namespace ByteDev.Http.FormUrlEncoded.Serialization
@@ -23,12 +22,9 @@ namespace ByteDev.Http.FormUrlEncoded.Serialization
 
         public static string GetAttributeName(this PropertyInfo source)
         {
-            var attribute = source.GetCustomAttributes(typeof(FormUrlEncodedPropertyNameAttribute), false).SingleOrDefault();
+            var attribute = (FormUrlEncodedPropertyNameAttribute)source.GetCustomAttributes(typeof(FormUrlEncodedPropertyNameAttribute), false).Single();
 
-            if (attribute == null)
-                throw new InvalidOperationException($"Property: {source.Name} does not have a {nameof(FormUrlEncodedPropertyNameAttribute)} attribute applied.");
-
-            return ((FormUrlEncodedPropertyNameAttribute) attribute).Name;
+            return attribute.Name;
         }
     }
 }
