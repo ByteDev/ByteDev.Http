@@ -25,7 +25,7 @@ namespace ByteDev.Http.FormUrlEncoded.Serialization
         public static string Decode(string value, DeserializeOptions options)
         {
             if (string.IsNullOrEmpty(value))
-                return string.Empty;
+                return value;
 
             if (!options.Decode)
                 return value;
