@@ -1,12 +1,24 @@
 # Release Notes
 
+## 1.4.1 - 28 September 2020
+
+Breaking changes:
+- (None)
+
+New features:
+- (None)
+
+Bug fixes / internal changes:
+- Upgraded `ByteDev.Reflection` dependency to 2.2.0
+- Package fixes
+
 ## 1.4.0 - 05 June 2020
 
 Breaking changes:
 - (None)
 
 New features:
-- Added FormUrlEncodedPropertyNameAttribute
+- Added `FormUrlEncodedPropertyNameAttribute`
 
 Bug fixes:
 - (None)
@@ -17,7 +29,7 @@ Breaking changes:
 - (None)
 
 New features:
-- Added overloads for FormUrlEncodedSerializer.Serialize and Deserialize
+- Added overloads for `FormUrlEncodedSerializer.Serialize` and `Deserialize`
 
 Bug fixes:
 - Modified nuspec
@@ -29,7 +41,7 @@ Breaking changes:
 - (None)
 
 New features:
-- Added FormUrlEncodedSerializer
+- Added `FormUrlEncodedSerializer`
 
 Bug fixes:
 - (None)
@@ -40,8 +52,8 @@ Breaking changes:
 - (None)
 
 New features:
-- Added MediaType
-- Added MediaTypes
+- Added `MediaType`
+- Added `MediaTypes`
 
 Bug fixes / internal changes:
 - (None)

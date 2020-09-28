@@ -33,7 +33,9 @@ namespace ByteDev.Http.FormUrlEncoded.Serialization
             var unescapedValue = value;
 
             if (options.DecodePlusAsSpace)
+            {
                 unescapedValue = unescapedValue.Replace("+", "%20");
+            }
 
             return Uri.UnescapeDataString(unescapedValue);
         }

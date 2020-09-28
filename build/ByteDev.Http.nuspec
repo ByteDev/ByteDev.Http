@@ -10,16 +10,19 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>.NET Standard library with some HTTP related functionality (HttpStatusCode, HttpStatusCodeCategory, MediaType, FormUrlEncodedSerializer...).</description>
     <tags>http httpstatuscode statuscode mediatype contenttype mimetype formurlencoded serialization serializer</tags>
-	  <icon>images\icon.png</icon>
+    <projectUrl>https://github.com/ByteDev/ByteDev.Http</projectUrl>
+    <icon>images\icon.png</icon>
+    <license type="file">LICENSE</license>
     <dependencies>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="ByteDev.Reflection" version="2.0.0" />
+        <dependency id="ByteDev.Reflection" version="2.2.0" />
       </group>
     </dependencies>
   </metadata>
   <files>
     <file src="..\src\ByteDev.Http\bin\Release\netstandard2.0\ByteDev.Http.dll" target="lib\netstandard2.0" />
     <file src="..\src\ByteDev.Http\bin\Release\netstandard2.0\ByteDev.Http.xml" target="lib\netstandard2.0" />
-	<file src="..\images\icon.png" target="images\" />
+    <file src="..\images\icon.png" target="images\" />
+    <file src="..\LICENSE*" target="" />
   </files>
 </package>

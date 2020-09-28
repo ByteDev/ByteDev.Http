@@ -22,12 +22,6 @@ Releases follow semantic versioning.
 
 Full details of the release notes can be viewed on [GitHub](https://github.com/ByteDev/ByteDev.Http/blob/master/docs/RELEASE-NOTES.md).
 
-## Code
-
-The repo can be cloned from git bash:
-
-`git clone https://github.com/ByteDev/ByteDev.Http`
-
 ## Usage
 
 Library currently consists of the following main classes:
@@ -45,10 +39,10 @@ Located in namespace: `ByteDev.Http`.
 HttpStatusCode statusCode = HttpStatusCode.CreateFromCode(404);
 
 Console.WriteLine(statusCode.Code);                 // 404
-Console.WriteLine(statusCode.Name);                 // Not Found
+Console.WriteLine(statusCode.Name);                 // "Not Found"
 Console.WriteLine(statusCode.Category.Code);        // 4
-Console.WriteLine(statusCode.Category.Name);        // Client Error
-Console.WriteLine(statusCode.Category.Description); // Request contains bad syntax or cannot be fulfilled.
+Console.WriteLine(statusCode.Category.Name);        // "Client Error"
+Console.WriteLine(statusCode.Category.Description); // "Request contains bad syntax or cannot be fulfilled."
 ```
 
 ### MediaType
@@ -60,12 +54,12 @@ Located in namespace: `ByteDev.Http`.
 ```csharp
 var mediaType = new MediaType("application/vnd.api+json; charset=UTF-8");
 
-Console.WriteLine(mediaType);                       // application/vnd.api+json; charset=UTF-8
-Console.WriteLine(mediaType.Type);                  // application
-Console.WriteLine(mediaType.Tree);                  // vnd
-Console.WriteLine(mediaType.SubType);               // api
-Console.WriteLine(mediaType.Suffix);                // json
-Console.WriteLine(mediaType.Parameters["charset"]); // UTF-8
+Console.WriteLine(mediaType);                       // "application/vnd.api+json; charset=UTF-8"
+Console.WriteLine(mediaType.Type);                  // "application"
+Console.WriteLine(mediaType.Tree);                  // "vnd"
+Console.WriteLine(mediaType.SubType);               // "api"
+Console.WriteLine(mediaType.Suffix);                // "json"
+Console.WriteLine(mediaType.Parameters["charset"]); // "UTF-8"
 ```
 
 ### FormUrlEncodedSerializer
@@ -81,11 +75,9 @@ Supports:
 
 #### Example Usage
 
-**Entity class**
-
-The class you want to serialize/deserialize.
-
 ```csharp
+// Entitiy class (class you want to serialize/deserialize)
+
 public class Dummy
 {
     public string Name { get; set; }
@@ -97,11 +89,9 @@ public class Dummy
 }
 ```
 
-**Serialize**
-
-Serialize an object to a form URL encoded string.
-
 ```csharp
+// Serialize an object to a form URL encoded string
+
 var dummy = new Dummy
 {
     Name = "John Smith",
@@ -114,11 +104,9 @@ string data = FormUrlEncodedSerializer.Serialize(dummy);
 Console.WriteLine(data);   // "Name=John+Smith&Age=50&emailAddress=john%40somewhere.com"
 ```
 
-**Deserialize**
-
-Deserialize a form URL encoded string to an object.
-
 ```csharp
+// Deserialize a form URL encoded string to an object
+
 string data = "Name=John+Smith&Age=50&emailAddress=john%40somewhere.com";
 
 Dummy dummy = FormUrlEncodedSerializer.Deserialize<Dummy>(data);
