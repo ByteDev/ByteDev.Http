@@ -9,7 +9,7 @@ New features:
 - (None)
 
 Bug fixes / internal changes:
-- Upgraded `ByteDev.Reflection` dependency to 2.2.0
+- Package now has dependency on `ByteDev.Reflection`
 - Package fixes
 
 ## 1.4.0 - 05 June 2020
