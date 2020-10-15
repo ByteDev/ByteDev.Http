@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ByteDev.Http.FormUrlEncoded.Serialization;
-using ByteDev.Xml.Serialization;
+using ByteDev.Http.Xml;
 using NUnit.Framework;
 
 namespace ByteDev.Http.UnitTests
@@ -48,7 +48,7 @@ namespace ByteDev.Http.UnitTests
             {
                 var dummy = new TestDummy {Name = "John"};
 
-                var xml = new XmlDataSerializer().Serialize(dummy);
+                var xml = XmlDataSerializer.Serialize(dummy);
 
                 var sut = new StringContent(xml);
 
