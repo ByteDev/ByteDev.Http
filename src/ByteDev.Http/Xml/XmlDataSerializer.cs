@@ -7,11 +7,14 @@ namespace ByteDev.Http.Xml
 {
     internal static class XmlDataSerializer
     {
-        public static string Serialize(object obj)
+        public static string Serialize(object obj, Encoding encoding = null)
         {
+            if (encoding == null)
+                encoding = Encoding.UTF8;
+
             var xmlWriterSettings = new XmlWriterSettings
             {
-                Encoding = Encoding.UTF8
+                Encoding = encoding
             };
 
             using (var sw = new StringWriter())
@@ -34,9 +37,9 @@ namespace ByteDev.Http.Xml
 
             var xmlSerializer = new XmlSerializer(typeof(T));
 
-            using (var stringReader = new StringReader(xml))
+            using (var sr = new StringReader(xml))
             {
-                return (T)xmlSerializer.Deserialize(stringReader);
+                return (T)xmlSerializer.Deserialize(sr);
             }
         }
     }
