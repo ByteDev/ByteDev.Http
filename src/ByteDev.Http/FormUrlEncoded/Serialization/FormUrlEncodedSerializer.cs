@@ -71,7 +71,7 @@ namespace ByteDev.Http.FormUrlEncoded.Serialization
         /// </summary>
         /// <typeparam name="T">Type of object to deserialize to.</typeparam>
         /// <param name="formUrlEncodedData">Form URL encoded string to deserialize.</param>
-        /// <param name="options">Deserialize options.</param>
+        /// <param name="options">Deserialize options. If null defaults will be used.</param>
         /// <returns>Object of type <typeparamref name="T" />.</returns>
         /// <exception cref="T:System.ArgumentException"><paramref name="formUrlEncodedData" /> is null or empty.</exception>
         /// <exception cref="T:System.ArgumentNullException"><paramref name="options" /> is null.</exception>
@@ -81,7 +81,7 @@ namespace ByteDev.Http.FormUrlEncoded.Serialization
                 throw new ArgumentException("Form URL encoded data was null or empty.", nameof(formUrlEncodedData));
 
             if (options == null)
-                throw new ArgumentNullException(nameof(options));
+                options = new DeserializeOptions();
 
             var pairs = formUrlEncodedData.Split('&');
 

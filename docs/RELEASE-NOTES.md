@@ -1,5 +1,21 @@
 # Release Notes
 
+## 1.5.0 - ?? October 2020
+
+Breaking changes:
+- (None)
+
+New features:
+- Added `HttpContentExtensions.ReadAsJsonAsync`
+- Added `HttpContentExtensions.ReadAsXmlAsync`
+- Added `HttpContentExtensions.ReadAsFormUrlEncodedAsync`
+- Added `JsonContent`
+- Added `XmlContent`
+- Added `FormUrlEncodedContent`
+
+Bug fixes / internal changes:
+- `FormUrlEncodedSerializer.Deserialize` if options is null then defaults are now used (no exception thrown)
+
 ## 1.4.1 - 28 September 2020
 
 Breaking changes:

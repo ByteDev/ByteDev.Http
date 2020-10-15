@@ -191,9 +191,14 @@ namespace ByteDev.Http.UnitTests.FormUrlEncoded.Serialization
             }
 
             [Test]
-            public void WhenOptionsIsNull_ThenThrowException()
+            public void WhenOptionsIsNull_ThenUseDefaultOptions()
             {
-                Assert.Throws<ArgumentNullException>(() => FormUrlEncodedSerializer.Deserialize<TestDummyString>("n=1", null));
+                const string data = "String=John&AnotherString=Smith";
+
+                var result = FormUrlEncodedSerializer.Deserialize<TestDummyString>(data, null);
+
+                Assert.That(result.String, Is.EqualTo("John"));
+                Assert.That(result.AnotherString, Is.EqualTo("Smith"));
             }
 
             [Test]
