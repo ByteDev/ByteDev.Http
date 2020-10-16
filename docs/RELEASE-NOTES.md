@@ -9,6 +9,7 @@ New features:
 - Added `HttpContentExtensions.ReadAsJsonAsync`
 - Added `HttpContentExtensions.ReadAsXmlAsync`
 - Added `HttpContentExtensions.ReadAsFormUrlEncodedAsync`
+- Added `HttpContentHeadersExtensions.AddOrUpdate`
 - Added `JsonContent`
 - Added `XmlContent`
 - Added `FormUrlEncodedContent`
