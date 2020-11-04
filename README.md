@@ -29,6 +29,8 @@ Library currently consists of the following main classes:
 - `MediaType`
 - `FormUrlEncodedSerializer`
 
+---
+
 ### HttpStatusCode
 
 Represents a standard HTTP status code with extended information.
@@ -44,6 +46,8 @@ Console.WriteLine(statusCode.Category.Code);        // 4
 Console.WriteLine(statusCode.Category.Name);        // "Client Error"
 Console.WriteLine(statusCode.Category.Description); // "Request contains bad syntax or cannot be fulfilled."
 ```
+
+---
 
 ### MediaType
 
@@ -61,6 +65,8 @@ Console.WriteLine(mediaType.SubType);               // "api"
 Console.WriteLine(mediaType.Suffix);                // "json"
 Console.WriteLine(mediaType.Parameters["charset"]); // "UTF-8"
 ```
+
+---
 
 ### FormUrlEncodedSerializer
 
@@ -115,3 +121,17 @@ Console.WriteLine(dummy.Name);    // "John Smith"
 Console.WriteLine(dummy.Age);     // 50
 Console.WriteLine(dummy.Email);   // "john@somewhere.com"
 ```
+
+---
+
+### Extension Methods
+
+The assembly also contains a number of public extension methods.  To use them reference namespace: `ByteDev.Http`.
+
+HttpContent
+- ReadAsFormUrlEncodedAsync
+- ReadAsJsonAsync
+- ReadAsXmlAsync
+
+HttpContentHeaders
+- AddOrUpdate
