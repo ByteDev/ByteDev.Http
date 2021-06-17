@@ -6,6 +6,8 @@
 
 .NET Standard library with some HTTP related functionality.
 
+Looking for the form URL encoded functionality? It has now moved to a new project [ByteDev.FormUrlEncoded](https://github.com/ByteDev/ByteDev.FormUrlEncoded) which is also on [nuget](https://www.nuget.org/packages/ByteDev.FormUrlEncoded/).
+
 ## Installation
 
 ByteDev.Http has been written as a .NET Standard 2.0 library, so you can consume it from a .NET Core or .NET Framework 4.6.1 (or greater) application.
