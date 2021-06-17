@@ -25,9 +25,15 @@ Full details of the release notes can be viewed on [GitHub](https://github.com/B
 ## Usage
 
 Library currently consists of the following main classes:
+
 - `HttpStatusCode`
 - `MediaType`
-- `FormUrlEncodedSerializer`
+
+As well as a few HTTP content specialized classes (located in namespace: `ByteDev.Http.Content`):
+
+- `FormUrlEncodedContent`
+- `JsonContent`
+- `XmlContent`
 
 ---
 
@@ -40,11 +46,11 @@ Located in namespace: `ByteDev.Http`.
 ```csharp
 HttpStatusCode statusCode = HttpStatusCode.CreateFromCode(404);
 
-Console.WriteLine(statusCode.Code);                 // 404
-Console.WriteLine(statusCode.Name);                 // "Not Found"
-Console.WriteLine(statusCode.Category.Code);        // 4
-Console.WriteLine(statusCode.Category.Name);        // "Client Error"
-Console.WriteLine(statusCode.Category.Description); // "Request contains bad syntax or cannot be fulfilled."
+// statusCode.Code == 404
+// statusCode.Name == "Not Found"
+// statusCode.Category.Code == 4
+// statusCode.Category.Name == "Client Error"
+// statusCode.Category.Description == "Request contains bad syntax or cannot be fulfilled."
 ```
 
 ---
@@ -58,68 +64,12 @@ Located in namespace: `ByteDev.Http`.
 ```csharp
 var mediaType = new MediaType("application/vnd.api+json; charset=UTF-8");
 
-Console.WriteLine(mediaType);                       // "application/vnd.api+json; charset=UTF-8"
-Console.WriteLine(mediaType.Type);                  // "application"
-Console.WriteLine(mediaType.Tree);                  // "vnd"
-Console.WriteLine(mediaType.SubType);               // "api"
-Console.WriteLine(mediaType.Suffix);                // "json"
-Console.WriteLine(mediaType.Parameters["charset"]); // "UTF-8"
-```
-
----
-
-### FormUrlEncodedSerializer
-
-Represents a serializer for form URL encoded (x-www-form-urlencoded) content.
-
-Located in namespace: `ByteDev.Http.FormUrlEncoded.Serialization`. 
-
-Supports:
-- All built in .NET basic types (primitives, decimal, string, object etc.)
-- Options for switching on and off encoding/decoding of characters through the `SerializeOptions` and `DeserializeOptions` type parameters.
-- `FormUrlEncodedPropertyNameAttribute` on properties to override the property name to use when serializing/deserializing
-
-#### Example Usage
-
-```csharp
-// Entitiy class (class you want to serialize/deserialize)
-
-public class Dummy
-{
-    public string Name { get; set; }
-
-    public int Age { get; set; }
-
-    [FormUrlEncodedPropertyName("emailAddress")]
-    public string Email { get; set; }
-}
-```
-
-```csharp
-// Serialize an object to a form URL encoded string
-
-var dummy = new Dummy
-{
-    Name = "John Smith",
-    Age = 50,
-    Email = "john@somewhere.com"
-};
-
-string data = FormUrlEncodedSerializer.Serialize(dummy);
-
-Console.WriteLine(data);   // "Name=John+Smith&Age=50&emailAddress=john%40somewhere.com"
-```
-
-```csharp
-// Deserialize a form URL encoded string to an object
-
-string data = "Name=John+Smith&Age=50&emailAddress=john%40somewhere.com";
-
-Dummy dummy = FormUrlEncodedSerializer.Deserialize<Dummy>(data);
-
-Console.WriteLine(dummy.Name);    // "John Smith"
-Console.WriteLine(dummy.Age);     // 50
-Console.WriteLine(dummy.Email);   // "john@somewhere.com"
+// mediaType == "application/vnd.api+json; charset=UTF-8"
+// mediaType.Type == "application"
+// mediaType.Tree == "vnd"
+// mediaType.SubType == "api"
+// mediaType.Suffix == "json"
+// mediaType.Parameters["charset"] == "UTF-8"
 ```
 
 ---
@@ -129,7 +79,6 @@ Console.WriteLine(dummy.Email);   // "john@somewhere.com"
 The assembly also contains a number of public extension methods.  To use them reference namespace: `ByteDev.Http`.
 
 HttpContent
-- ReadAsFormUrlEncodedAsync
 - ReadAsJsonAsync
 - ReadAsXmlAsync
 

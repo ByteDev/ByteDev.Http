@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Text;
 
-namespace ByteDev.Http.Xml
+namespace ByteDev.Http.Content
 {
     public class XmlContent : StringContent
     {

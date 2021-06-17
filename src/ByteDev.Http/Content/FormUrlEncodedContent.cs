@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Text;
 
-namespace ByteDev.Http.FormUrlEncoded
+namespace ByteDev.Http.Content
 {
     public class FormUrlEncodedContent : StringContent
     {

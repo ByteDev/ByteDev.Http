@@ -3,7 +3,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace ByteDev.Http.Xml
+namespace ByteDev.Http
 {
     internal static class XmlDataSerializer
     {

@@ -1,5 +1,20 @@
 # Release Notes
 
+## 2.0.0 - 17 June 2021
+
+Breaking changes:
+- Removed entire `FormUrlEncoded` namespace and form URL encoded serialzation functionality (moved to package: `ByteDev.FormUrlEncoded`).
+- Removed `HttpContentExtensions.ReadAsFormUrlEncodedAsync` method.
+- Moved `FormUrlEncodedContent` to namespace `ByteDev.Http.Content`.
+- Moved `JsonContent` to namespace `ByteDev.Http.Content`.
+- Moved `XmlContent` to namespace `ByteDev.Http.Content`.
+
+New features:
+- (None)
+
+Bug fixes / internal changes:
+- Updated `ByteDev.Reflection` package dependency to 2.3.1.
+
 ## 1.5.0 - 04 November 2020
 
 Breaking changes:

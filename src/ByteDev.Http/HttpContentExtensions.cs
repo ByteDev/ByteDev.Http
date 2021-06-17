@@ -2,8 +2,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ByteDev.Http.FormUrlEncoded.Serialization;
-using ByteDev.Http.Xml;
 
 namespace ByteDev.Http
 {
@@ -27,16 +25,6 @@ namespace ByteDev.Http
             string content = await source.ReadAsStringAsync();
 
             return XmlDataSerializer.Deserialize<T>(content);
-        }
-
-        public static async Task<T> ReadAsFormUrlEncodedAsync<T>(this HttpContent source, DeserializeOptions options = null) where T : new()
-        {
-            if (source == null)
-                throw new ArgumentNullException(nameof(source));
-
-            string content = await source.ReadAsStringAsync();
-
-            return FormUrlEncodedSerializer.Deserialize<T>(content, options);
         }
     }
 }
