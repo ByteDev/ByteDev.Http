@@ -9,10 +9,12 @@ namespace ByteDev.Http.UnitTests
         [TestFixture]
         public class CreateFromCategoryCode
         {
-            [Test]
-            public void WhenCategoryDoesNotExist_ThenThrowException()
+            [TestCase(-1)]
+            [TestCase(0)]
+            [TestCase(6)]
+            public void WhenCategoryDoesNotExist_ThenThrowException(int categoryCode)
             {
-                Assert.Throws<ArgumentException>(() => HttpStatusCodeCategory.CreateFromCategoryCode(6));
+                Assert.Throws<ArgumentException>(() => HttpStatusCodeCategory.CreateFromCategoryCode(categoryCode));
             }
 
             [TestCase(1, "Informational")]
@@ -33,24 +35,28 @@ namespace ByteDev.Http.UnitTests
         [TestFixture]
         public class CreateFromHttpStatusCode
         {
-            [Test]
-            public void WhenHttpStatusCodeNotValid_ThenThrowException()
+            [TestCase(99)]
+            [TestCase(600)]
+            public void WhenHttpStatusCodeNotValid_ThenThrowException(int statusCode)
             {
-                Assert.Throws<ArgumentOutOfRangeException>(() => HttpStatusCodeCategory.CreateFromHttpStatusCode(99));
+                Assert.Throws<ArgumentOutOfRangeException>(() => HttpStatusCodeCategory.CreateFromHttpStatusCode(statusCode));
             }
 
-            [Test]
-            public void WhenCategoryDoesNotExist_ThenThrowException()
+            [TestCase(100, 1)]
+            [TestCase(199, 1)]
+            [TestCase(200, 2)]
+            [TestCase(299, 2)]
+            [TestCase(300, 3)]
+            [TestCase(399, 3)]
+            [TestCase(400, 4)]
+            [TestCase(499, 4)]
+            [TestCase(500, 5)]
+            [TestCase(599, 5)]
+            public void WhenCategoryExists_ThenReturnCategory(int statusCode, int expected)
             {
-                Assert.Throws<ArgumentException>(() => HttpStatusCodeCategory.CreateFromHttpStatusCode(601));
-            }
+                var result = HttpStatusCodeCategory.CreateFromHttpStatusCode(statusCode);
 
-            [Test]
-            public void WhenCategoryExists_ThenReturnCategory()
-            {
-                var result = HttpStatusCodeCategory.CreateFromHttpStatusCode(100);
-
-                Assert.That(result.Code, Is.EqualTo(1));
+                Assert.That(result.Code, Is.EqualTo(expected));
             }
         }
     }

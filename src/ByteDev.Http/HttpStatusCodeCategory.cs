@@ -8,8 +8,6 @@ namespace ByteDev.Http
     /// </summary>
     public class HttpStatusCodeCategory
     {
-        private const int FirstHttpStatusCode = 100;
-
         private static readonly IDictionary<int, HttpStatusCodeCategory> Categories = new Dictionary<int, HttpStatusCodeCategory>
         {
             { 1, new HttpStatusCodeCategory { Code = 1, Name = "Informational", Description = "Request was received, continuing process." } },
@@ -33,6 +31,31 @@ namespace ByteDev.Http
         /// Description of the category.
         /// </summary>
         public string Description { get; private set; }
+
+        /// <summary>
+        /// Indicates if category is informational.
+        /// </summary>
+        public bool IsInformational => Code == 1;
+
+        /// <summary>
+        /// Indicates if category is success.
+        /// </summary>
+        public bool IsSuccess => Code == 2;
+
+        /// <summary>
+        /// Indicates if category is redirection.
+        /// </summary>
+        public bool IsRedirection => Code == 3;
+
+        /// <summary>
+        /// Indicates if category is client error.
+        /// </summary>
+        public bool IsClientError => Code == 4;
+
+        /// <summary>
+        /// Indicates if category is server error.
+        /// </summary>
+        public bool IsServerError => Code == 5;
 
         private HttpStatusCodeCategory()
         {
@@ -64,22 +87,14 @@ namespace ByteDev.Http
         /// <param name="httpStatusCode">HTTP status code.</param>
         /// <returns>New instance of <see cref="T:ByteDev.Http.HttpStatusCodeCategory" />.</returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="httpStatusCode" /> is not valid.</exception>
-        /// <exception cref="T:System.ArgumentException">No HTTP status code category exists for <paramref name="httpStatusCode" />.</exception>
         public static HttpStatusCodeCategory CreateFromHttpStatusCode(int httpStatusCode)
         {
-            if(httpStatusCode < FirstHttpStatusCode)
-                throw new ArgumentOutOfRangeException(nameof(httpStatusCode), "HTTP status code is not valid.");
+            if (!HttpStatusCodeValidator.Validate(httpStatusCode))
+                throw new ArgumentOutOfRangeException(nameof(httpStatusCode), $"HTTP status code: '{httpStatusCode}' is not valid.");
 
-            try
-            {
-                var categoryCode = GetFirstDigit(httpStatusCode);
+            var categoryCode = GetFirstDigit(httpStatusCode);
 
-                return CreateFromCategoryCode(categoryCode);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException($"No HTTP status code category exists for: '{httpStatusCode}'.", nameof(httpStatusCode), ex);
-            }
+            return CreateFromCategoryCode(categoryCode);
         }
 
         public override string ToString()
