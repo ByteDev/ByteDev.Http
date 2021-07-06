@@ -15,7 +15,6 @@
     <license type="file">LICENSE</license>
     <dependencies>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="ByteDev.Reflection" version="2.3.1" />
         <dependency id="System.Text.Json" version="4.7.2" />
       </group>
     </dependencies>

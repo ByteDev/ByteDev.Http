@@ -1,6 +1,6 @@
 # Release Notes
 
-## 2.1.0 - ?
+## 2.1.0 - 06 July 2021
 
 Breaking changes:
 - (None)
@@ -9,7 +9,7 @@ New features:
 - Added more properties to `HttpStatusCodeCategory`.
 
 Bug fixes / internal changes:
-- (None)
+- Removed `ByteDev.Reflection` package dependency (no longer needed).
 
 ## 2.0.0 - 17 June 2021
 
