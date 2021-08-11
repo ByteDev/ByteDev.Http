@@ -33,6 +33,7 @@ Library currently consists of the following main classes:
 
 As well as a few HTTP content specialized classes (located in namespace: `ByteDev.Http.Content`):
 
+- `EmptyContent`
 - `FormUrlEncodedContent`
 - `JsonContent`
 - `XmlContent`

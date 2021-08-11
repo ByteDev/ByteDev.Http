@@ -1,5 +1,16 @@
 # Release Notes
 
+## 2.2.0 - 11 August 2021
+
+Breaking changes:
+- (None)
+
+New features:
+- Added `EmptyContent` class.
+
+Bug fixes / internal changes:
+- (None)
+
 ## 2.1.0 - 06 July 2021
 
 Breaking changes:
@@ -32,13 +43,13 @@ Breaking changes:
 - (None)
 
 New features:
-- Added `HttpContentExtensions.ReadAsJsonAsync`
-- Added `HttpContentExtensions.ReadAsXmlAsync`
-- Added `HttpContentExtensions.ReadAsFormUrlEncodedAsync`
-- Added `HttpContentHeadersExtensions.AddOrUpdate`
-- Added `JsonContent`
-- Added `XmlContent`
-- Added `FormUrlEncodedContent`
+- Added `HttpContentExtensions.ReadAsJsonAsync` method.
+- Added `HttpContentExtensions.ReadAsXmlAsync` method.
+- Added `HttpContentExtensions.ReadAsFormUrlEncodedAsync` method.
+- Added `HttpContentHeadersExtensions.AddOrUpdate` method.
+- Added `JsonContent` class.
+- Added `XmlContent` class.
+- Added `FormUrlEncodedContent` class.
 
 Bug fixes / internal changes:
 - `FormUrlEncodedSerializer.Deserialize` if options is null then defaults are now used (no exception thrown)
@@ -52,8 +63,8 @@ New features:
 - (None)
 
 Bug fixes / internal changes:
-- Package now has dependency on `ByteDev.Reflection`
-- Package fixes
+- Package now has dependency on `ByteDev.Reflection`.
+- Package fixes.
 
 ## 1.4.0 - 05 June 2020
 
@@ -61,7 +72,7 @@ Breaking changes:
 - (None)
 
 New features:
-- Added `FormUrlEncodedPropertyNameAttribute`
+- Added `FormUrlEncodedPropertyNameAttribute` class.
 
 Bug fixes:
 - (None)
@@ -72,11 +83,11 @@ Breaking changes:
 - (None)
 
 New features:
-- Added overloads for `FormUrlEncodedSerializer.Serialize` and `Deserialize`
+- Added overloads for `FormUrlEncodedSerializer.Serialize` and `Deserialize` methods.
 
 Bug fixes:
 - Modified nuspec
-- Added complete XML documentation to public properties and methods
+- Added complete XML documentation to public properties and methods.
 
 ## 1.2.0 - 02 June 2020
 
@@ -84,7 +95,7 @@ Breaking changes:
 - (None)
 
 New features:
-- Added `FormUrlEncodedSerializer`
+- Added `FormUrlEncodedSerializer` class.
 
 Bug fixes:
 - (None)
@@ -95,8 +106,8 @@ Breaking changes:
 - (None)
 
 New features:
-- Added `MediaType`
-- Added `MediaTypes`
+- Added `MediaType`.
+- Added `MediaTypes`.
 
 Bug fixes / internal changes:
 - (None)

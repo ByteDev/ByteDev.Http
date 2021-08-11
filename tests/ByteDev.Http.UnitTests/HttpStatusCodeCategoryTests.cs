@@ -55,7 +55,7 @@ namespace ByteDev.Http.UnitTests
             public void WhenCategoryExists_ThenReturnCategory(int statusCode, int expected)
             {
                 var result = HttpStatusCodeCategory.CreateFromHttpStatusCode(statusCode);
-
+                
                 Assert.That(result.Code, Is.EqualTo(expected));
             }
         }
