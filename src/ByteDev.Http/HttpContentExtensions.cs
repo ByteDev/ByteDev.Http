@@ -1,30 +1,53 @@
 ﻿using System;
 using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace ByteDev.Http
 {
+    /// <summary>
+    /// Extension methods for <see cref="T:System.Net.Http.HttpContent" />.
+    /// </summary>
     public static class HttpContentExtensions
     {
-        public static async Task<T> ReadAsJsonAsync<T>(this HttpContent source)
+        /// <summary>
+        /// Determines if the content is type JSON.
+        /// </summary>
+        /// <param name="source">Content to perform the operation on.</param>
+        /// <returns>True the content is JSON; otherwise false.</returns>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is null.</exception>
+        public static bool IsJson(this HttpContent source)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
 
-            string content = await source.ReadAsStringAsync();
-
-            return JsonSerializer.Deserialize<T>(content);
+            return source.Headers?.ContentType?.MediaType == MediaTypes.Application.Json;
         }
 
-        public static async Task<T> ReadAsXmlAsync<T>(this HttpContent source)
+        /// <summary>
+        /// Determines if the content is type XML.
+        /// </summary>
+        /// <param name="source">Content to perform the operation on.</param>
+        /// <returns>True the content is XML; otherwise false.</returns>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is null.</exception>
+        public static bool IsXml(this HttpContent source)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
 
-            string content = await source.ReadAsStringAsync();
+            return source.Headers?.ContentType?.MediaType == MediaTypes.Application.Xml;
+        }
 
-            return XmlDataSerializer.Deserialize<T>(content);
+        /// <summary>
+        /// Determines if the content is type form URL encoded.
+        /// </summary>
+        /// <param name="source">Content to perform the operation on.</param>
+        /// <returns>True the content is form URL encoded; otherwise false.</returns>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is null.</exception>
+        public static bool IsFormUrlEncoded(this HttpContent source)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            return source.Headers?.ContentType?.MediaType == MediaTypes.Application.FormUrlEncoded;
         }
     }
 }

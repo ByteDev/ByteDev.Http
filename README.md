@@ -79,11 +79,13 @@ var mediaType = new MediaType("application/vnd.api+json; charset=UTF-8");
 
 ### Extension Methods
 
-The assembly also contains a number of public extension methods.  To use them reference namespace: `ByteDev.Http`.
+The assembly also contains a number of public extension methods.  
 
-HttpContent
-- ReadAsJsonAsync
-- ReadAsXmlAsync
+To use them reference namespace: `ByteDev.Http`.
 
 HttpContentHeaders
+- AddOrUpdate
+
+HttpRequestHeaders
+- AddUserAgent
 - AddOrUpdate

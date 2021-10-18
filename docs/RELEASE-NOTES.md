@@ -1,5 +1,21 @@
 # Release Notes
 
+## 3.0.0 - ?
+
+Breaking changes:
+- Removed `HttpContentExtensions.ReadAsJsonAsync` method.
+- Removed `HttpContentExtensions.ReadAsXmlAsync` method.
+
+New features:
+- Added `HttpRequestHeadersExtensions.AddUserAgent` method.
+- Added `HttpRequestHeadersExtensions.AddOrUpdate` method.
+- Added `HttpContentExtensions.IsJson` method.
+- Added `HttpContentExtensions.IsXml` method.
+- Added `HttpContentExtensions.IsFormUrlEncoded` method.
+
+Bug fixes / internal changes:
+- (None)
+
 ## 2.2.0 - 11 August 2021
 
 Breaking changes:

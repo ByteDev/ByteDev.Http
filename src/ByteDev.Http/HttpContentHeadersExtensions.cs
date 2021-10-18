@@ -22,9 +22,7 @@ namespace ByteDev.Http
                 throw new ArgumentNullException(nameof(source));
 
             if (source.Contains(name))
-            {
                 source.Remove(name);
-            }
 
             source.Add(name, value);
         }
