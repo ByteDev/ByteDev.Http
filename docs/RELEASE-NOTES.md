@@ -12,6 +12,7 @@ New features:
 - Added `HttpContentExtensions.IsJson` method.
 - Added `HttpContentExtensions.IsXml` method.
 - Added `HttpContentExtensions.IsFormUrlEncoded` method.
+- Added more `MediaTypes` fields.
 
 Bug fixes / internal changes:
 - Removed `System.Text.Json` package dependency.
