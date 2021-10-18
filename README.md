@@ -83,6 +83,11 @@ The assembly also contains a number of public extension methods.
 
 To use them reference namespace: `ByteDev.Http`.
 
+HttpContent
+- IsFormUrlEncoded
+- IsJson
+- IsXml
+
 HttpContentHeaders
 - AddOrUpdate
 

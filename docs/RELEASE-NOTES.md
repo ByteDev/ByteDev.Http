@@ -14,7 +14,7 @@ New features:
 - Added `HttpContentExtensions.IsFormUrlEncoded` method.
 
 Bug fixes / internal changes:
-- (None)
+- Removed `System.Text.Json` package dependency.
 
 ## 2.2.0 - 11 August 2021
 

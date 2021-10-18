@@ -14,9 +14,9 @@
     <icon>images\icon.png</icon>
     <license type="file">LICENSE</license>
     <dependencies>
-      <group targetFramework=".NETStandard2.0">
-        <dependency id="System.Text.Json" version="4.7.2" />
-      </group>
+      <dependencies>
+        <group targetFramework=".NETStandard2.0" />
+      </dependencies>
     </dependencies>
   </metadata>
   <files>
