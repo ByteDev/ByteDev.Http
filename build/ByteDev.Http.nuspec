@@ -14,9 +14,7 @@
     <icon>images\icon.png</icon>
     <license type="file">LICENSE</license>
     <dependencies>
-      <dependencies>
-        <group targetFramework=".NETStandard2.0" />
-      </dependencies>
+      <group targetFramework=".NETStandard2.0" />
     </dependencies>
   </metadata>
   <files>
