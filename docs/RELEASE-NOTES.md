@@ -1,6 +1,6 @@
 # Release Notes
 
-## 3.0.0 - ?
+## 3.0.0 - 20 October 2021
 
 Breaking changes:
 - Removed `HttpContentExtensions.ReadAsJsonAsync` method.
