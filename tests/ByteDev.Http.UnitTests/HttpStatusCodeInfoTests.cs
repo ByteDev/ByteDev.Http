@@ -36,5 +36,19 @@ namespace ByteDev.Http.UnitTests
                 Assert.That(result.Category.Code, Is.EqualTo(1));
             }
         }
+
+        [TestFixture]
+        public class ToStringOverride
+        {
+            [Test]
+            public void WhenCalled_ThenReturnsString()
+            {
+                var sut = HttpStatusCodeInfo.CreateFromCode(404);
+
+                var result = sut.ToString();
+
+                Assert.That(result, Is.EqualTo("404 Not Found"));
+            }
+        }
     }
 }

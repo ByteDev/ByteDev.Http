@@ -68,5 +68,19 @@ namespace ByteDev.Http.UnitTests
                 Assert.That(result.Code, Is.EqualTo(1));
             }
         }
+
+        [TestFixture]
+        public class ToStringOverride
+        {
+            [Test]
+            public void WhenCalled_ThenReturnString()
+            {
+                var sut = HttpStatusCodeCategory.CreateFromHttpStatusCode(404);
+
+                var result = sut.ToString();
+
+                Assert.That(result, Is.EqualTo("4xx Client Error"));
+            }
+        }
     }
 }
