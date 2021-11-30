@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace ByteDev.Http
 {
@@ -95,6 +96,18 @@ namespace ByteDev.Http
             var categoryCode = GetFirstDigit(httpStatusCode);
 
             return CreateFromCategoryCode(categoryCode);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:ByteDev.Http.HttpStatusCodeCategory" /> class based
+        /// on a HTTP status code.
+        /// </summary>
+        /// <param name="httpStatusCode">HTTP status code.</param>
+        /// <returns>New instance of <see cref="T:ByteDev.Http.HttpStatusCodeCategory" />.</returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="httpStatusCode" /> is not valid.</exception>
+        public static HttpStatusCodeCategory CreateFromHttpStatusCode(HttpStatusCode httpStatusCode)
+        {
+            return CreateFromHttpStatusCode((int)httpStatusCode);
         }
 
         public override string ToString()

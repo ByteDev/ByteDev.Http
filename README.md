@@ -28,7 +28,7 @@ Full details of the release notes can be viewed on [GitHub](https://github.com/B
 
 Library currently consists of the following main classes:
 
-- `HttpStatusCode`
+- `HttpStatusCodeInfo`
 - `MediaType`
 
 As well as a few HTTP content specialized classes (located in namespace: `ByteDev.Http.Content`):
@@ -40,14 +40,14 @@ As well as a few HTTP content specialized classes (located in namespace: `ByteDe
 
 ---
 
-### HttpStatusCode
+### HttpStatusCodeInfo
 
 Represents a standard HTTP status code with extended information.
 
 Located in namespace: `ByteDev.Http`.
 
 ```csharp
-HttpStatusCode statusCode = HttpStatusCode.CreateFromCode(404);
+HttpStatusCodeInfo statusCode = HttpStatusCodeInfo.CreateFromCode(404);
 
 // statusCode.Code == 404
 // statusCode.Name == "Not Found"

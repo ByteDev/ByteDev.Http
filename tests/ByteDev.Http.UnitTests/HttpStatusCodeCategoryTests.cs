@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using NUnit.Framework;
 
 namespace ByteDev.Http.UnitTests
@@ -57,6 +58,14 @@ namespace ByteDev.Http.UnitTests
                 var result = HttpStatusCodeCategory.CreateFromHttpStatusCode(statusCode);
                 
                 Assert.That(result.Code, Is.EqualTo(expected));
+            }
+
+            [Test]
+            public void WhenCodeIsHttpStatusCodeEnum_AndExists_ThenReturnCategory()
+            {
+                var result = HttpStatusCodeCategory.CreateFromHttpStatusCode(HttpStatusCode.Continue);
+
+                Assert.That(result.Code, Is.EqualTo(1));
             }
         }
     }

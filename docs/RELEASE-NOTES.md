@@ -1,5 +1,18 @@
 # Release Notes
 
+## 4.0.0 - 30 November 2021
+
+Breaking changes:
+- Renamed `HttpStatusCode` to `HttpStatusCodeInfo` (to avoid `System.Net.HttpStatusCode` confusion).
+- Added private constructor to `HttpStatusCodeInfo`.
+
+New features:
+- Added `HttpStatusCodeInfo.CreateFromCode` overload that takes `System.Net.HttpStatusCode` argument.
+- Added `HttpStatusCodeCategory.CreateFromHttpStatusCode` overload that takes `System.Net.HttpStatusCode` argument.
+
+Bug fixes / internal changes:
+- (None)
+
 ## 3.0.0 - 20 October 2021
 
 Breaking changes:
