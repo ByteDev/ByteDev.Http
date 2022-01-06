@@ -1,5 +1,16 @@
 # Release Notes
 
+## 4.1.0 - ?
+
+Breaking changes:
+- (None)
+
+New features:
+- Added `HttpContentExtensions.IsMediaType` method.
+
+Bug fixes / internal changes:
+- (None)
+
 ## 4.0.0 - 30 November 2021
 
 Breaking changes:

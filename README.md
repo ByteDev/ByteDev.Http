@@ -87,6 +87,7 @@ HttpContent
 - IsFormUrlEncoded
 - IsJson
 - IsXml
+- IsMediaType
 
 HttpContentHeaders
 - AddOrUpdate

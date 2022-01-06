@@ -16,10 +16,7 @@ namespace ByteDev.Http
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is null.</exception>
         public static bool IsJson(this HttpContent source)
         {
-            if (source == null)
-                throw new ArgumentNullException(nameof(source));
-
-            return source.Headers?.ContentType?.MediaType == MediaTypes.Application.Json;
+            return IsMediaType(source, MediaTypes.Application.Json);
         }
 
         /// <summary>
@@ -30,10 +27,7 @@ namespace ByteDev.Http
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is null.</exception>
         public static bool IsXml(this HttpContent source)
         {
-            if (source == null)
-                throw new ArgumentNullException(nameof(source));
-
-            return source.Headers?.ContentType?.MediaType == MediaTypes.Application.Xml;
+            return IsMediaType(source, MediaTypes.Application.Xml);
         }
 
         /// <summary>
@@ -44,10 +38,22 @@ namespace ByteDev.Http
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is null.</exception>
         public static bool IsFormUrlEncoded(this HttpContent source)
         {
+            return IsMediaType(source, MediaTypes.Application.FormUrlEncoded);
+        }
+
+        /// <summary>
+        /// Determines if the content is of the provided media type.
+        /// </summary>
+        /// <param name="source">Content to perform the operation on.</param>
+        /// <param name="mediaType">Media type.</param>
+        /// <returns>True the content is of the provided media type; otherwise false.</returns>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is null.</exception>
+        public static bool IsMediaType(this HttpContent source, string mediaType)
+        {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
 
-            return source.Headers?.ContentType?.MediaType == MediaTypes.Application.FormUrlEncoded;
+            return source.Headers?.ContentType?.MediaType == mediaType;
         }
     }
 }
