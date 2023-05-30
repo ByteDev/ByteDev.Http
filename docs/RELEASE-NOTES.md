@@ -7,6 +7,10 @@ Breaking changes:
 
 New features:
 - Added `HttpContentExtensions.IsMediaType` method.
+- Added `HttpContentExtensions.SafeReadAsStringAsync` method.
+- Added `HttpRequestHeadersExtensions.AddAcceptJson` method.
+- Added `HttpRequestHeadersExtensions.AddAcceptXml` method.
+- Added `HttpStatusCodeExtensions.ToReadableString` method.
 
 Bug fixes / internal changes:
 - (None)

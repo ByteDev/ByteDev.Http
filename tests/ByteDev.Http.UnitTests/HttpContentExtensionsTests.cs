@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 using ByteDev.Http.Content;
 using NUnit.Framework;
+using FormUrlEncodedContent = ByteDev.Http.Content.FormUrlEncodedContent;
 
 namespace ByteDev.Http.UnitTests
 {
@@ -128,6 +131,40 @@ namespace ByteDev.Http.UnitTests
                 var result = sut.IsFormUrlEncoded();
 
                 Assert.That(result, Is.True);
+            }
+        }
+
+        [TestFixture]
+        public class SafeReadAsStringAsync : HttpContentExtensionsTests
+        {
+            [Test]
+            public async Task WhenSourceIsNull_ThenReturnEmpty()
+            {
+                var result = await HttpContentExtensions.SafeReadAsStringAsync(null);
+
+                Assert.That(result, Is.Empty);
+            }
+
+            [Test]
+            public async Task WhenIsEmpty_ThenReturnEmpty()
+            {
+                var sut = new EmptyContent();
+
+                var result = await sut.SafeReadAsStringAsync();
+
+                Assert.That(result, Is.Empty);
+            }
+
+            [Test]
+            public async Task WhenHasString_ThenReturnString()
+            {
+                const string content = "Test string";
+
+                var sut = new StringContent(content);
+
+                var result = await sut.SafeReadAsStringAsync();
+
+                Assert.That(result, Is.EqualTo(content));
             }
         }
     }

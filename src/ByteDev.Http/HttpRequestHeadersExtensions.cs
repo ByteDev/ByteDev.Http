@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace ByteDev.Http
 {
@@ -28,7 +27,7 @@ namespace ByteDev.Http
 
             var assemblyName = assembly.GetName();
 
-            var productName = RemoveNonAlphaNumeric(assemblyName.Name);
+            var productName = assemblyName.Name.RemoveNonAlphaNumeric();
             var productVersion = $"{assemblyName.Version.Major}.{assemblyName.Version.Minor}.{assemblyName.Version.Build}";
             
             source.AddUserAgent(productName, productVersion);
@@ -53,7 +52,7 @@ namespace ByteDev.Http
         /// Add a name value pair to the headers. If the name already exists then the
         /// value will be updated.
         /// </summary>
-        /// <param name="source">Headers collection to perform the operation on.</param>
+        /// <param name="source">Request headers collection to perform the operation on.</param>
         /// <param name="name">The header to add or update in the collection.</param>
         /// <param name="value">The content of the header.</param>
         /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is null.</exception>
@@ -68,9 +67,32 @@ namespace ByteDev.Http
             source.Add(name, value);
         }
 
-        private static string RemoveNonAlphaNumeric(string value)
+        /// <summary>
+        /// Add the accept JSON request header.
+        /// </summary>
+        /// <param name="source">Request headers collection to perform the operation on.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is null.</exception>
+        public static void AddAcceptJson(this HttpRequestHeaders source)
         {
-            return new Regex("[^A-Za-z0-9]").Replace(value, string.Empty);
+            AddAccept(source, MediaTypes.Application.Json);
+        }
+
+        /// <summary>
+        /// Add the accept XML request header.
+        /// </summary>
+        /// <param name="source">Request headers collection to perform the operation on.</param>
+        /// <exception cref="T:System.ArgumentNullException"><paramref name="source" /> is null.</exception>
+        public static void AddAcceptXml(this HttpRequestHeaders source)
+        {
+            AddAccept(source, MediaTypes.Application.Xml);
+        }
+
+        private static void AddAccept(HttpRequestHeaders source, string mediaType)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            source.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
         }
     }
 }

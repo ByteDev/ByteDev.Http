@@ -88,10 +88,13 @@ HttpContent
 - IsJson
 - IsXml
 - IsMediaType
+- SafeReadAsStringAsync
 
 HttpContentHeaders
 - AddOrUpdate
 
 HttpRequestHeaders
-- AddUserAgent
+- AddAcceptJson
+- AddAcceptXml
 - AddOrUpdate
+- AddUserAgent

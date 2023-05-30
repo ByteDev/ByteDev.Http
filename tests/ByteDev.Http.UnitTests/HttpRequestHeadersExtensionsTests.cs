@@ -77,5 +77,45 @@ namespace ByteDev.Http.UnitTests
                 Assert.That(result.Single(), Is.EqualTo("Value2"));
             }
         }
+
+        [TestFixture]
+        public class AddAcceptJson : HttpRequestHeadersExtensionsTests
+        {
+            [Test]
+            public void WhenIsNull_ThenThrowException()
+            {
+                Assert.Throws<ArgumentNullException>(() => HttpRequestHeadersExtensions.AddAcceptJson(null));
+            }
+
+            [Test]
+            public void WhenIsNotNull_ThenAddAcceptJson()
+            {
+                var sut = CreateSut();
+
+                sut.AddAcceptJson();
+
+                Assert.That(sut.Accept.Single().MediaType, Is.EqualTo("application/json"));
+            }
+        }
+
+        [TestFixture]
+        public class AddAcceptXml : HttpRequestHeadersExtensionsTests
+        {
+            [Test]
+            public void WhenIsNull_ThenThrowException()
+            {
+                Assert.Throws<ArgumentNullException>(() => HttpRequestHeadersExtensions.AddAcceptXml(null));
+            }
+
+            [Test]
+            public void WhenIsNotNull_ThenAddAcceptJson()
+            {
+                var sut = CreateSut();
+
+                sut.AddAcceptXml();
+
+                Assert.That(sut.Accept.Single().MediaType, Is.EqualTo("application/xml"));
+            }
+        }
     }
 }

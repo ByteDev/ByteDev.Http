@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace ByteDev.Http
 {
@@ -54,6 +55,20 @@ namespace ByteDev.Http
                 throw new ArgumentNullException(nameof(source));
 
             return source.Headers?.ContentType?.MediaType == mediaType;
+        }
+
+        /// <summary>
+        /// Reads the content and returns as a string. If the HttpContent is null
+        /// then empty is returned.
+        /// </summary>
+        /// <param name="source">HttpContent read as a string.</param>
+        /// <returns>HttpContent as a string. If is null then empty is returned.</returns>
+        public static async Task<string> SafeReadAsStringAsync(this HttpContent source)
+        {
+            if (source == null)
+                return string.Empty;
+
+            return await source.ReadAsStringAsync();
         }
     }
 }
