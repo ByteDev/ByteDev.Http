@@ -1,6 +1,6 @@
 # Release Notes
 
-## 4.1.0 - ?
+## 4.1.0 - 30 May 2023
 
 Breaking changes:
 - (None)
